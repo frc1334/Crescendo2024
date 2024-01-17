@@ -9,18 +9,14 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class ColourCommand extends Command {
-  int r;
-  int g;
-  int b;
+  int colour;
 
   /** Creates a new ColourCommand. */
   public ColourCommand(int r, int g, int b) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.ledSubsystem);
 
-    this.r = r;
-    this.g = g;
-    this.b = b;
+    this.colour = colour;
   }
 
   // Called when the command is initially scheduled.
@@ -30,12 +26,14 @@ public class ColourCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.ledSubsystem.rainbow();
+    RobotContainer.ledSubsystem.ledColour(colour);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    
+  }
 
   // Returns true when the command should end.
   @Override

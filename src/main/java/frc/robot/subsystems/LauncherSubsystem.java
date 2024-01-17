@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LauncherConstants;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -13,13 +14,13 @@ public class LauncherSubsystem extends SubsystemBase {
   TalonFX launcherRight;
   /** Creates a new LauncherSubsystem. */
   public LauncherSubsystem() {
-    launcherLeft = new TalonFX(7);
-    launcherRight = new TalonFX(6);
+    launcherLeft = new TalonFX(LauncherConstants.LAUNCHER_MOTOR_LEFT);
+    launcherRight = new TalonFX(LauncherConstants.LAUNCHER_MOTOR_RIGHT);
   }
 
   public void runLauncher(double speed) {
     launcherLeft.set(speed);
-    launcherRight.set(speed);
+    launcherRight.set(-speed);
   }
 
   @Override

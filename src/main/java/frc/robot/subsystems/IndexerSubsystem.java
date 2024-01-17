@@ -23,7 +23,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
   public void runIndexer(double speed) {
     indexerLeft.set(speed);
-    indexerRight.set(speed);
+    indexerRight.set(-speed);
   }
 
   @Override

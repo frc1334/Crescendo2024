@@ -39,8 +39,6 @@ public class Robot extends TimedRobot {
   
   CommandScheduler commandScheduler = CommandScheduler.getInstance();
 
-  Command rainbow = new RainbowCommand();
-
   
   @Override
   public void robotInit() {
@@ -68,7 +66,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     commandScheduler.run();
-    robotContainer.ledSubsystem.rainbow();
+    RobotContainer.ledSubsystem.rainbowWave();
   }
 
   @Override
@@ -76,7 +74,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    
+    RobotContainer.ledSubsystem.ledColour(LEDConstants.WHITE);
   }
 
   @Override

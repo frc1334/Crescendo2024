@@ -51,7 +51,10 @@ public class RobotContainer {
 
         // indexer
         new JoystickButton(driverController, 3).whileTrue(
-            new IndexerCommand(IndexerConstants.INDEXER_SPEED));
+            new IndexerCommand(IndexerConstants.INDEXER_FORWARD_SPEED));
+
+        new JoystickButton(driverController, 4).whileTrue(
+            new IndexerCommand(IndexerConstants.INDEXER_REVERSE_SPEED));
 
     }
     

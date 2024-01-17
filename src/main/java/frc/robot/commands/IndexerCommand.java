@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
@@ -14,6 +15,9 @@ public class IndexerCommand extends Command {
   public IndexerCommand(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.indexerSubsystem);
+    addRequirements(RobotContainer.ledSubsystem);
+
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -24,11 +28,15 @@ public class IndexerCommand extends Command {
   @Override
   public void execute() {
     RobotContainer.indexerSubsystem.runIndexer(speed);
+    RobotContainer.ledSubsystem.ledColour(LEDConstants.YELLOW);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.indexerSubsystem.runIndexer(0);
+    RobotContainer.ledSubsystem.ledColour(LEDConstants.WHITE);
+  }
 
   // Returns true when the command should end.
   @Override

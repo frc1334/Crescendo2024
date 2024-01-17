@@ -23,6 +23,7 @@ public class LEDSubsystem extends SubsystemBase {
     ledStrip.start();
   }
 
+
   public void rainbow() {
     int rainbowFirstPixelHue = 5;
     // For every pixel
@@ -40,12 +41,46 @@ public class LEDSubsystem extends SubsystemBase {
     ledStrip.setData(ledBuffer);
   }
 
-  public void ledColour(int r, int g, int b) {
+
+  public void ledColour(int colour) {
+    int r = (colour >> 16) & 0xFF;
+    int g = (colour >> 8) & 0xFF;
+    int b = colour & 0xFF;
+
     for (int i = 0; i < ledBuffer.getLength(); i++) {
       ledBuffer.setRGB(i, r, g, b);
     }
     ledStrip.setData(ledBuffer);
   }
+
+
+  public void rainbowWave() {
+    // Get the current time in milliseconds
+    long currentTime = System.currentTimeMillis();
+
+    // Define the speed of the wave (adjust as needed)
+    double waveSpeed = 0.1;
+
+    // Loop through each LED in the strip
+    for (int i = 0; i < ledBuffer.getLength(); i++) {
+        // Calculate hue based on position and time
+        float hue = (float) ((i + currentTime * waveSpeed) % 360.0);
+
+        // Convert HSV to RGB
+        int rgb = java.awt.Color.HSBtoRGB(hue / 360.0f, 1.0f, 1.0f);
+
+        // Extract individual color components
+        int r = (rgb >> 16) & 0xFF;
+        int g = (rgb >> 8) & 0xFF;
+        int b = rgb & 0xFF;
+
+        // Set the color for the current LED
+        ledBuffer.setRGB(i, r, g, b);
+    }
+
+    // Update the LED strip with the new colors
+    ledStrip.setData(ledBuffer);
+}
 
 
   @Override

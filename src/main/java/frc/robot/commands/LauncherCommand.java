@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.LEDConstants;
 
 public class LauncherCommand extends Command {
   double speed;
@@ -25,11 +26,15 @@ public class LauncherCommand extends Command {
   @Override
   public void execute() {
     RobotContainer.launcherSubsystem.runLauncher(speed);
+    RobotContainer.ledSubsystem.ledColour(LEDConstants.PURPLE);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    RobotContainer.launcherSubsystem.runLauncher(0);
+    RobotContainer.ledSubsystem.ledColour(LEDConstants.WHITE);
+  }
 
   // Returns true when the command should end.
   @Override
