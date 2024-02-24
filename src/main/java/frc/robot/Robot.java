@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.IndexerSubsystem;
+// import frc.robot.subsystems.IndexerSubsystem;
 // import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.LauncherSubsystem;
+// import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.commands.LEDCommands.RainbowCommand;
@@ -66,7 +66,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     commandScheduler.run();
-    RobotContainer.ledSubsystem.rainbowWave();
+    RobotContainer.ledSubsystem.ledColour(LEDConstants.RED);
+    // while (RobotContainer.ledSubsystem.switchActivated()) {
+    //   RobotContainer.ledSubsystem.ledColour(LEDConstants.YELLOW);
+    // }
   }
 
   @Override

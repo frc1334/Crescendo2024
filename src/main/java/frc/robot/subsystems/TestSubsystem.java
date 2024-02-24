@@ -9,24 +9,19 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
-import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class TestSubsystem extends SubsystemBase {
 
-  CANSparkMax intakeMotor;
+  Spark test;
 
   /** Creates a new IntakeSubsystem. */
-  public IntakeSubsystem() {
-    intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR, MotorType.kBrushless);
+  public TestSubsystem() {
+    test = new Spark(9);
   }
 
-  public void intakeIn(double speed) {
-    intakeMotor.set(speed);
-  }
-
-  public void intakeOut(double speed) {
-    intakeMotor.set(speed);
+  public void testRun(double speed) {
+    test.set(speed);
   }
 
   @Override

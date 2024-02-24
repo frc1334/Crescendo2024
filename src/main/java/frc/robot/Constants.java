@@ -11,7 +11,7 @@ public class Constants {
 
     public static class IntakeConstants {
         // FIXME: ids
-        public static final int INTAKE_MOTOR = 0;
+        public static final int INTAKE_MOTOR = 11;
 
         public static final double INTAKE_SPEED = 0;
 
@@ -19,8 +19,8 @@ public class Constants {
 
     public static class IndexerConstants {
         // FIXME: ids
-        public static final int INDEXER_MOTOR_LEFT = 7;
-        public static final int INDEXER_MOTOR_RIGHT = 6;
+        public static final int INDEXER_MOTOR = 12;
+        // public static final int INDEXER_MOTOR_RIGHT = 6;
 
         public static final double INDEXER_FORWARD_SPEED = 0.2;
         public static final double INDEXER_REVERSE_SPEED = -0.1;
@@ -28,8 +28,8 @@ public class Constants {
     }
 
     public static class LauncherConstants {
-        public static final int LAUNCHER_MOTOR_LEFT = 8;
-        public static final int LAUNCHER_MOTOR_RIGHT = 9;
+        public static final int LAUNCHER_MOTOR_LEFT = 13;
+        public static final int LAUNCHER_MOTOR_RIGHT = 14;
 
         // FIXME: velocity
         public static final double LAUNCHER_SPEED_HIGH = 0.5;
@@ -44,7 +44,7 @@ public class Constants {
     }
 
     public static class LEDConstants {
-        public static final int LED_PORT = 9;
+        public static final int LED_PORT = 0;
 
         public static final int WHITE = 0xFFFFFF;
         public static final int RED = 0xFF0000;
@@ -52,5 +52,9 @@ public class Constants {
         public static final int GREEN = 0x00FF00;
         public static final int PURPLE = 0x800080;
         public static final int BLUE = 0x0000FF;
+    }
+
+    public static class OtherConstants {
+        public static final int PROXIMITY_PORT = 9;
     }
 }

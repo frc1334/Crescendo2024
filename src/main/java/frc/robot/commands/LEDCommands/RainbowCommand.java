@@ -22,7 +22,7 @@ public class RainbowCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.ledSubsystem.rainbow();
+    RobotContainer.ledSubsystem.rainbowWave();
   }
 
   // Called once the command ends or is interrupted.

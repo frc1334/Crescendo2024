@@ -9,26 +9,49 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.TestSubsystem;
 import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.commands.IndexerCommand;
+import frc.robot.commands.TestCommand;
 import frc.robot.commands.LauncherCommand;
-// import frc.robot.commands.IntakeCommands.IntakeInCommand;
+import frc.robot.commands.IntakeCommands.IntakeInCommand;
 import frc.robot.commands.LEDCommands.RainbowCommand;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LauncherConstants;;
+import frc.robot.Constants.LauncherConstants;
+import frc.robot.subsystems.IntakeSubsystem;
 
 
 
 /** Add your docs here. */
 public class RobotContainer {
 
-    XboxController driverController = new XboxController(0);
-
     public static LauncherSubsystem launcherSubsystem = new LauncherSubsystem();
-    // public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    public static TestSubsystem testSubsystem = new TestSubsystem();
+
     public static IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
     public static LEDSubsystem ledSubsystem = new LEDSubsystem();
+
+    // driver xbox
+    XboxController driverController = new XboxController(0);
+
+    JoystickButton driverA = new JoystickButton(driverController, 1);
+    JoystickButton driverB = new JoystickButton(driverController, 2);
+    JoystickButton driverX = new JoystickButton(driverController, 3);
+    JoystickButton driverY = new JoystickButton(driverController, 4);
+    JoystickButton driverLeftBumper = new JoystickButton(driverController, 5);
+    JoystickButton driverRightBumper = new JoystickButton(driverController, 6);
+
+    // operator xbox
+    XboxController operatorController = new XboxController(1);
+
+    JoystickButton operatorA = new JoystickButton(operatorController, 1);
+    JoystickButton operatorB = new JoystickButton(operatorController, 2);
+    JoystickButton operatorX = new JoystickButton(operatorController, 3);
+    JoystickButton operatorY = new JoystickButton(operatorController, 4);
+    JoystickButton operatorLeftBumper = new JoystickButton(operatorController, 5);
+    JoystickButton operatorRightBumper = new JoystickButton(operatorController, 6);
     
 
     public RobotContainer() {
@@ -39,22 +62,33 @@ public class RobotContainer {
 
     private void configureBindings() {
         // intake
-        // new JoystickButton(driverController, 2).whileTrue(
-        //     new IntakeInCommand(IntakeConstants.INTAKE_SPEED));
+        
+        operatorB.whileTrue(
+            new IntakeInCommand(-0.6));
+
+
+
+        // indexer
+        operatorX.whileTrue(
+            new IndexerCommand(-0.3));
+
+
+        // operatorB.whileTrue(
+        //     new TestCommand(0.3));
 
         
 
         // launcher
-        new JoystickButton(driverController, 1).whileTrue(
-            new LauncherCommand(LauncherConstants.LAUNCHER_SPEED_HIGH));
+        operatorA.whileTrue(
+            new LauncherCommand(0.5));
         
 
-        // indexer
-        new JoystickButton(driverController, 3).whileTrue(
-            new IndexerCommand(IndexerConstants.INDEXER_FORWARD_SPEED));
+        // // indexer
+        // operatorX.whileTrue(
+        //     new IndexerCommand(IndexerConstants.INDEXER_FORWARD_SPEED));
 
-        new JoystickButton(driverController, 4).whileTrue(
-            new IndexerCommand(IndexerConstants.INDEXER_REVERSE_SPEED));
+        // operatorY.whileTrue(
+        //     new IndexerCommand(IndexerConstants.INDEXER_REVERSE_SPEED));
 
     }
     
