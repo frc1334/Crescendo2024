@@ -9,10 +9,10 @@ import frc.robot.Constants.LEDConstants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
-public class IndexerCommand extends Command {
+public class IndexerUp extends Command {
   double speed;
   /** Creates a new IndexerCommand. */
-  public IndexerCommand(double speed) {
+  public IndexerUp(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.indexerSubsystem);
     addRequirements(RobotContainer.ledSubsystem);
@@ -41,6 +41,6 @@ public class IndexerCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.indexerSubsystem.switchActivated();
+    return false;
   }
 }

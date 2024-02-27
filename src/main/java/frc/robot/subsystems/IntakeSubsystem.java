@@ -14,15 +14,15 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-  CANSparkMax intakeMotor;
+  Spark intakeMotor;
 
   /** Creates a new IntakeSubsystem. */
   public IntakeSubsystem() {
-    intakeMotor = new CANSparkMax(IntakeConstants.INTAKE_MOTOR, MotorType.kBrushless);
+    intakeMotor = new Spark(IntakeConstants.INTAKE_MOTOR);
   }
 
   public void intakeIn(double speed) {
-    intakeMotor.set(speed);
+    intakeMotor.set(-speed);
   }
 
   public void intakeOut(double speed) {

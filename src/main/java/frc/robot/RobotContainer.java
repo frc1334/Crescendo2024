@@ -4,21 +4,32 @@
 
 package frc.robot;
 
+import java.io.File;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
-import frc.robot.subsystems.TestSubsystem;
+import frc.robot.subsystems.FlopperArm;
+import frc.robot.subsystems.FlopperWrist;
+import frc.robot.commands.FlopperArmCommand;
+import frc.robot.commands.FlopperWristCommand;
 import frc.robot.subsystems.LauncherSubsystem;
+import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.IndexerCommand;
-import frc.robot.commands.TestCommand;
+import frc.robot.commands.IndexerUp;
+import frc.robot.commands.IntakeAll;
 import frc.robot.commands.LauncherCommand;
+import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.IntakeCommands.IntakeInCommand;
 import frc.robot.commands.LEDCommands.RainbowCommand;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LauncherConstants;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 
@@ -26,9 +37,14 @@ import frc.robot.subsystems.IntakeSubsystem;
 /** Add your docs here. */
 public class RobotContainer {
 
+    public static SwerveSubsystem swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+                                                                            "swerve"));
+
     public static LauncherSubsystem launcherSubsystem = new LauncherSubsystem();
     public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-    public static TestSubsystem testSubsystem = new TestSubsystem();
+
+    public static FlopperArm flopperArm = new FlopperArm();
+    public static FlopperWrist flopperWrist = new FlopperWrist();
 
     public static IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
     public static LEDSubsystem ledSubsystem = new LEDSubsystem();
@@ -52,35 +68,55 @@ public class RobotContainer {
     JoystickButton operatorY = new JoystickButton(operatorController, 4);
     JoystickButton operatorLeftBumper = new JoystickButton(operatorController, 5);
     JoystickButton operatorRightBumper = new JoystickButton(operatorController, 6);
-    
+
 
     public RobotContainer() {
         configureBindings();
+
+        TeleopDrive xBoxTeleopDrive = new TeleopDrive(
+            swerveSubsystem,
+            () -> MathUtil.applyDeadband(-driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+            () -> MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+            () -> -driverController.getRightX(), () -> true);
+
+        swerveSubsystem.setDefaultCommand(xBoxTeleopDrive);
 
         
     }
 
     private void configureBindings() {
-        // intake
-        
-        operatorB.whileTrue(
-            new IntakeInCommand(-0.6));
+
+        operatorA.whileTrue(new FlopperArmCommand(0.1));
+        operatorB.whileTrue(new FlopperArmCommand(-0.1));
+
+        operatorLeftBumper.whileTrue(new FlopperWristCommand(0.1));
+        operatorRightBumper.whileTrue(new FlopperWristCommand(-0.1));
 
 
-
-        // indexer
-        operatorX.whileTrue(
-            new IndexerCommand(-0.3));
-
-
+        // // intake
         // operatorB.whileTrue(
-        //     new TestCommand(0.3));
+        //     new IntakeInCommand(0.6));
+
+
+        // // indexer
+        operatorX.whileTrue(
+            new IndexerUp(0.3));
+        
+        operatorY.whileTrue(
+            new LauncherCommand(0.1));
+
+        // operatorY.whileTrue(
+        //     new IntakeAll());
+
+
+        // operatorLeftBumper.whileTrue(
+        //     new FlopperArmCommand(0.9));
 
         
 
-        // launcher
-        operatorA.whileTrue(
-            new LauncherCommand(0.5));
+        // // launcher
+        // operatorA.whileTrue(
+        //     new LauncherCommand(0.1));
         
 
         // // indexer

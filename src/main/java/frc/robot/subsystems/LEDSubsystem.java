@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class LEDSubsystem extends SubsystemBase {
   AddressableLED ledStrip;
   AddressableLEDBuffer ledBuffer;
-  DigitalInput proximitySwitch;
 
   /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
@@ -25,13 +24,10 @@ public class LEDSubsystem extends SubsystemBase {
     ledStrip.setData(ledBuffer);
     ledStrip.start();
 
-    proximitySwitch = new DigitalInput(Constants.OtherConstants.PROXIMITY_PORT);
 
   }
 
-  public boolean switchActivated() {
-    return !proximitySwitch.get();
-  }
+  
 
 
   // public void rainbow() {

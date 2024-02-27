@@ -5,15 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.LEDConstants;
 
-public class TestCommand extends Command {
+public class FlopperWristCommand extends Command {
   double speed;
-  /** Creates a new IntakeOutCommand. */
-  public TestCommand(double speed) {
+  /** Creates a new FlopperWristCommand. */
+  public FlopperWristCommand(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.testSubsystem);
+    addRequirements(RobotContainer.flopperWrist);
     this.speed = speed;
   }
 
@@ -24,14 +24,14 @@ public class TestCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.testSubsystem.testRun(speed);
-    RobotContainer.ledSubsystem.ledColour(LEDConstants.BLUE);
+    RobotContainer.flopperWrist.runWrist(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.testSubsystem.testRun(0);
+      RobotContainer.flopperWrist.runWrist(0);
+
   }
 
   // Returns true when the command should end.

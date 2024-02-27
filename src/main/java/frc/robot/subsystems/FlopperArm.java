@@ -11,17 +11,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
-public class TestSubsystem extends SubsystemBase {
+public class FlopperArm extends SubsystemBase {
 
-  Spark test;
+  Spark arm;
 
   /** Creates a new IntakeSubsystem. */
-  public TestSubsystem() {
-    test = new Spark(9);
+  public FlopperArm() {
+    arm = new Spark(7);
   }
 
   public void testRun(double speed) {
-    test.set(speed);
+    arm.set(speed);
   }
 
   @Override
