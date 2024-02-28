@@ -11,7 +11,7 @@ public class Constants {
 
     public static class IntakeConstants {
         // FIXME: ids
-        public static final int INTAKE_MOTOR = 0;
+        public static final int INTAKE_MOTOR = 7;
 
         public static final double INTAKE_SPEED = 0;
 
@@ -19,8 +19,8 @@ public class Constants {
 
     public static class IndexerConstants {
         // FIXME: ids
-        public static final int INDEXER_MOTOR = 9;
-        // public static final int INDEXER_MOTOR_RIGHT = 6;
+        public static final int INDEXER_MOTOR_RIGHT = 9;
+        public static final int INDEXER_MOTOR_LEFT = 0;
 
         public static final double INDEXER_FORWARD_SPEED = 0.2;
         public static final double INDEXER_REVERSE_SPEED = -0.1;
@@ -35,6 +35,11 @@ public class Constants {
         public static final double LAUNCHER_SPEED_HIGH = 0.5;
         public static final double LAUNCHER_SPEED_LOW = 0;
 
+    }
+
+    public static class FlopperConstants {
+        public static final int FLOPPER_ARM = 17;
+        public static final int FLOPPER_WRIST = 18;
     }
 
     public static class OperatorConstants {

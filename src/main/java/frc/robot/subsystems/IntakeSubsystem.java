@@ -22,12 +22,12 @@ public class IntakeSubsystem extends SubsystemBase {
   }
 
   public void intakeIn(double speed) {
-    intakeMotor.set(-speed);
-  }
-
-  public void intakeOut(double speed) {
     intakeMotor.set(speed);
   }
+
+  // public void intakeOut(double speed) {
+  //   intakeMotor.set(speed);
+  // }
 
   @Override
   public void periodic() {

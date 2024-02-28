@@ -5,24 +5,40 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.FlopperConstants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class FlopperArm extends SubsystemBase {
 
-  Spark arm;
+  CANSparkMax arm;
+  RelativeEncoder encoder;
 
   /** Creates a new IntakeSubsystem. */
   public FlopperArm() {
-    arm = new Spark(7);
+    arm = new CANSparkMax(FlopperConstants.FLOPPER_ARM, MotorType.kBrushless);
+    encoder = arm.getEncoder();
   }
 
-  public void testRun(double speed) {
+  public void runFlopperArm(double speed) {
     arm.set(speed);
   }
+
+  public boolean encoderLimitReached(double setpoint) {
+    double encoderPosition = encoder.getPosition();
+    double error = Math.abs(encoderPosition - setpoint);
+
+    if (error <= 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
 
   @Override
   public void periodic() {

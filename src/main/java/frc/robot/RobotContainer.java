@@ -15,15 +15,20 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.FlopperArm;
 import frc.robot.subsystems.FlopperWrist;
-import frc.robot.commands.FlopperArmCommand;
-import frc.robot.commands.FlopperWristCommand;
 import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IndexerUp;
-import frc.robot.commands.IntakeAll;
 import frc.robot.commands.LauncherCommand;
+import frc.robot.commands.ShootingSequence;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.TimedIndexer;
+import frc.robot.commands.FlopperCommands.FlopperArmCommand;
+import frc.robot.commands.FlopperCommands.FlopperBack;
+import frc.robot.commands.FlopperCommands.FlopperOut;
+import frc.robot.commands.FlopperCommands.FlopperWristCommand;
+import frc.robot.commands.IntakeCommands.IntakeAll;
+import frc.robot.commands.IntakeCommands.IntakeFinal;
 import frc.robot.commands.IntakeCommands.IntakeInCommand;
 import frc.robot.commands.LEDCommands.RainbowCommand;
 import frc.robot.Constants.IndexerConstants;
@@ -86,11 +91,22 @@ public class RobotContainer {
 
     private void configureBindings() {
 
-        operatorA.whileTrue(new FlopperArmCommand(0.1));
-        operatorB.whileTrue(new FlopperArmCommand(-0.1));
+        // operatorA.whileTrue(new FlopperArmCommand(0.1));
+        // operatorB.whileTrue(new FlopperArmCommand(-0.1));
 
-        operatorLeftBumper.whileTrue(new FlopperWristCommand(0.1));
-        operatorRightBumper.whileTrue(new FlopperWristCommand(-0.1));
+        // operatorX.whileTrue(new FlopperWristCommand(0.1));
+        // operatorY.whileTrue(new FlopperWristCommand(-0.1));
+
+        // operatorLeftBumper.onTrue(new FlopperOut());
+        // operatorRightBumper.onTrue(new FlopperBack());
+
+        operatorX.onTrue(new IntakeAll());
+        operatorY.whileTrue(new ShootingSequence());
+
+        operatorA.onTrue(new TimedIndexer(0.3, 4000));
+        operatorB.whileTrue(new LauncherCommand(0.2));
+
+        
 
 
         // // intake
@@ -99,11 +115,11 @@ public class RobotContainer {
 
 
         // // indexer
-        operatorX.whileTrue(
-            new IndexerUp(0.3));
+        // operatorX.whileTrue(
+        //     new IndexerUp(0.3));
         
-        operatorY.whileTrue(
-            new LauncherCommand(0.1));
+        // operatorY.whileTrue(
+        //     new LauncherCommand(0.1));
 
         // operatorY.whileTrue(
         //     new IntakeAll());

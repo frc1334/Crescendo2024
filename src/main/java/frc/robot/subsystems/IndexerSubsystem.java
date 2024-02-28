@@ -17,14 +17,16 @@ import frc.robot.Constants.IndexerConstants;;
 
 public class IndexerSubsystem extends SubsystemBase {
 
-  Spark indexerMotor;
+  Spark indexerLeft;
+  Spark indexerRight;
 
   DigitalInput proximitySwitch;
 
 
   /** Creates a new IndexerSubsystem. */
   public IndexerSubsystem() {
-    indexerMotor = new Spark(IndexerConstants.INDEXER_MOTOR);
+    indexerLeft = new Spark(IndexerConstants.INDEXER_MOTOR_LEFT);
+    indexerRight = new Spark(IndexerConstants.INDEXER_MOTOR_RIGHT);
 
     proximitySwitch = new DigitalInput(Constants.OtherConstants.PROXIMITY_PORT);
 
@@ -32,7 +34,8 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public void runIndexer(double speed) {
-    indexerMotor.set(-speed);
+    indexerLeft.set(speed);
+    indexerRight.set(-speed);
   }
 
   public boolean switchActivated() {

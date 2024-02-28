@@ -4,23 +4,42 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.FlopperConstants;
 
 public class FlopperWrist extends SubsystemBase {
 
-    Spark wrist;
+    CANSparkMax wrist;
+    RelativeEncoder encoder;
 
   /** Creates a new FlopperWrist. */
   public FlopperWrist() {
 
-    wrist = new Spark(3);
+    wrist = new CANSparkMax(FlopperConstants.FLOPPER_WRIST, MotorType.kBrushless);
+    encoder = wrist.getEncoder();
+    encoder.setPosition(0);
   }
 
 
-  public void runWrist(double speed) {
+  public void runFlopperWrist(double speed) {
     wrist.set(speed);
+  }
+
+  public boolean encoderLimitReached(double setpoint) {
+    double encoderPosition = encoder.getPosition();
+    double error = Math.abs(encoderPosition - setpoint);
+
+    if (error <= 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   @Override

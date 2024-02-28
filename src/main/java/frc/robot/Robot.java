@@ -67,9 +67,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     commandScheduler.run();
     RobotContainer.ledSubsystem.ledColour(LEDConstants.RED);
-    while (RobotContainer.indexerSubsystem.switchActivated()) {
-      RobotContainer.ledSubsystem.ledColour(LEDConstants.YELLOW);
-    }
+    
   }
 
   @Override

@@ -5,16 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.IntakeCommands.IntakeInCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeAll extends ParallelCommandGroup {
-  /** Creates a new IntakeAll. */
-  public IntakeAll() {
+public class ShootingSequence extends ParallelCommandGroup {
+  /** Creates a new ShootingSequence. */
+  public ShootingSequence() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new IntakeInCommand(0.6), new IndexerCommand(0.3));
+    addCommands(new LauncherCommand(0.2), new IndexerWait());
   }
 }
