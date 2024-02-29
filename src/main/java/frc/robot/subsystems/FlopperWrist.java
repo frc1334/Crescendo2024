@@ -35,7 +35,7 @@ public class FlopperWrist extends SubsystemBase {
     double encoderPosition = encoder.getPosition();
     double error = Math.abs(encoderPosition - setpoint);
 
-    if (error <= 1) {
+    if (error <= 0.1) {
       return true;
     } else {
       return false;

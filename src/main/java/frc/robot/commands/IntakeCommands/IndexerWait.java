@@ -4,17 +4,17 @@
 
 package frc.robot.commands.IntakeCommands;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.commands.TimedIndexer;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeIndexer extends ParallelRaceGroup {
-  /** Creates a new IntakeIndexer. */
-  public IntakeIndexer() {
+public class IndexerWait extends SequentialCommandGroup {
+  /** Creates a new IndexerWait. */
+  public IndexerWait() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new IntakeInCommand(1), new TimedIndexer(1, 100));
+    addCommands(new WaitCommand(2), new TimedIndexer(0.2, 40000));
   }
 }

@@ -22,6 +22,7 @@ public class FlopperArm extends SubsystemBase {
   public FlopperArm() {
     arm = new CANSparkMax(FlopperConstants.FLOPPER_ARM, MotorType.kBrushless);
     encoder = arm.getEncoder();
+    encoder.setPosition(0);
   }
 
   public void runFlopperArm(double speed) {
@@ -32,7 +33,7 @@ public class FlopperArm extends SubsystemBase {
     double encoderPosition = encoder.getPosition();
     double error = Math.abs(encoderPosition - setpoint);
 
-    if (error <= 1) {
+    if (error <= 0.05) {
       return true;
     } else {
       return false;

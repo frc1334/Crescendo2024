@@ -2,19 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.LEDConstants;
 
-public class LauncherCommand extends Command {
+public class IndexerUp extends Command {
   double speed;
-  /** Creates a new LauncherCommand. */
-  public LauncherCommand(double speed) {
+  /** Creates a new IndexerCommand. */
+  public IndexerUp(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.launcherSubsystem);
+    addRequirements(RobotContainer.indexerSubsystem);
+    addRequirements(RobotContainer.ledSubsystem);
+
     this.speed = speed;
   }
 
@@ -25,15 +27,15 @@ public class LauncherCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.launcherSubsystem.runLauncher(speed);
-    RobotContainer.ledSubsystem.ledColour(LEDConstants.PURPLE);
+    RobotContainer.indexerSubsystem.runIndexer(speed);
+    // RobotContainer.ledSubsystem.ledColour(LEDConstants.YELLOW);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.launcherSubsystem.runLauncher(0);
-    RobotContainer.ledSubsystem.ledColour(LEDConstants.WHITE);
+    RobotContainer.indexerSubsystem.runIndexer(0);
+    // RobotContainer.ledSubsystem.ledColour(LEDConstants.WHITE);
   }
 
   // Returns true when the command should end.

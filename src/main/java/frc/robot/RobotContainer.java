@@ -15,25 +15,27 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.FlopperArm;
 import frc.robot.subsystems.FlopperWrist;
-import frc.robot.subsystems.LauncherSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.commands.IndexerCommand;
-import frc.robot.commands.IndexerUp;
-import frc.robot.commands.LauncherCommand;
-import frc.robot.commands.ShootingSequence;
 import frc.robot.commands.TeleopDrive;
-import frc.robot.commands.TimedIndexer;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
-import frc.robot.commands.FlopperCommands.FlopperBack;
-import frc.robot.commands.FlopperCommands.FlopperOut;
+import frc.robot.commands.FlopperCommands.FlopperFlip;
+import frc.robot.commands.FlopperCommands.FlopperReady;
+import frc.robot.commands.FlopperCommands.FlopperZero;
+import frc.robot.commands.FlopperCommands.FlopperShoot;
 import frc.robot.commands.FlopperCommands.FlopperWristCommand;
-import frc.robot.commands.IntakeCommands.IntakeAll;
+import frc.robot.commands.IntakeCommands.IndexerCommand;
+import frc.robot.commands.IntakeCommands.IndexerUp;
+import frc.robot.commands.IntakeCommands.IntakeFirst;
 import frc.robot.commands.IntakeCommands.IntakeFinal;
 import frc.robot.commands.IntakeCommands.IntakeInCommand;
+import frc.robot.commands.IntakeCommands.TimedIndexer;
 import frc.robot.commands.LEDCommands.RainbowCommand;
+import frc.robot.commands.ShootCommands.AmpShoot;
+import frc.robot.commands.ShootCommands.ShooterCommand;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LauncherConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -45,7 +47,7 @@ public class RobotContainer {
     public static SwerveSubsystem swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
                                                                             "swerve"));
 
-    public static LauncherSubsystem launcherSubsystem = new LauncherSubsystem();
+    public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
     public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
 
     public static FlopperArm flopperArm = new FlopperArm();
@@ -97,14 +99,19 @@ public class RobotContainer {
         // operatorX.whileTrue(new FlopperWristCommand(0.1));
         // operatorY.whileTrue(new FlopperWristCommand(-0.1));
 
-        // operatorLeftBumper.onTrue(new FlopperOut());
-        // operatorRightBumper.onTrue(new FlopperBack());
+        operatorA.onTrue(new FlopperReady());
+        operatorB.onTrue(new FlopperFlip());
+        operatorLeftBumper.onTrue(new FlopperShoot());
+        operatorRightBumper.onTrue(new FlopperZero());
 
-        operatorX.onTrue(new IntakeAll());
-        operatorY.whileTrue(new ShootingSequence());
+        // operatorLeftBumper.onTrue(new FlopperWristCommand(0.1, 45));
+        // operatorRightBumper.onTrue(new FlopperWristCommand(-0.1, 0));
 
-        operatorA.onTrue(new TimedIndexer(0.3, 4000));
-        operatorB.whileTrue(new LauncherCommand(0.2));
+        operatorX.onTrue(new IntakeFinal());
+        operatorY.whileTrue(new AmpShoot());
+
+        // operatorA.onTrue(new TimedIndexer(0.3, 4000));
+        // operatorB.whileTrue(new LauncherCommand(0.2));
 
         
 

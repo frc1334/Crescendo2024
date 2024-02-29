@@ -4,17 +4,17 @@
 
 package frc.robot.commands.IntakeCommands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.ShootCommands.TimedShooter;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import frc.robot.commands.ShootCommands.ShooterCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeFinal extends SequentialCommandGroup {
-  /** Creates a new IntakeFinal. */
-  public IntakeFinal() {
+public class IndexerShooterDown extends ParallelRaceGroup {
+  /** Creates a new IndexerShooterDown. */
+  public IndexerShooterDown() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new IntakeFirst(), new IntakeIndexerUp(), new IndexerShooterDown());
+    addCommands(new TimedIndexer(-0.3, 1000), new ShooterCommand(-0.2));
   }
 }

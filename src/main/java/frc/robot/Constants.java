@@ -27,9 +27,9 @@ public class Constants {
 
     }
 
-    public static class LauncherConstants {
-        public static final int LAUNCHER_MOTOR_LEFT = 2;
-        public static final int LAUNCHER_MOTOR_RIGHT = 6;
+    public static class ShooterConstants {
+        public static final int SHOOTER_MOTOR_LEFT = 2;
+        public static final int SHOOTER_MOTOR_RIGHT = 6;
 
         // FIXME: velocity
         public static final double LAUNCHER_SPEED_HIGH = 0.5;
@@ -40,6 +40,10 @@ public class Constants {
     public static class FlopperConstants {
         public static final int FLOPPER_ARM = 17;
         public static final int FLOPPER_WRIST = 18;
+    }
+
+    public static class ClimberConstants {
+
     }
 
     public static class OperatorConstants {

@@ -4,16 +4,17 @@
 
 package frc.robot.commands.FlopperCommands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FlopperOut extends ParallelCommandGroup {
-  /** Creates a new FlopperOut. */
-  public FlopperOut() {
+public class FlopperZero extends SequentialCommandGroup {
+  /** Creates a new FlopperBack. */
+  public FlopperZero() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TimedFlopperArm(0.1, 2), new TimedFlopperWrist(0.1, 200));
+    addCommands(new FlopperWristCommand(-0.1, 0), new FlopperArmCommand(-0.1, 0));
+
   }
 }

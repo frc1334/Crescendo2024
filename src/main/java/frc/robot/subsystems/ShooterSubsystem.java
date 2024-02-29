@@ -6,26 +6,26 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.LauncherConstants;
+import frc.robot.Constants.ShooterConstants;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-public class LauncherSubsystem extends SubsystemBase {
-  Spark launcherLeft;
-  Spark launcherRight;
+public class ShooterSubsystem extends SubsystemBase {
+  Spark shooterLeft;
+  Spark shooterRight;
 
   /** Creates a new LauncherSubsystem. */
-  public LauncherSubsystem() {
-    launcherLeft = new Spark(LauncherConstants.LAUNCHER_MOTOR_LEFT);
-    launcherRight = new Spark(LauncherConstants.LAUNCHER_MOTOR_RIGHT);
+  public ShooterSubsystem() {
+    shooterLeft = new Spark(ShooterConstants.SHOOTER_MOTOR_LEFT);
+    shooterRight = new Spark(ShooterConstants.SHOOTER_MOTOR_RIGHT);
   }
 
-  public void runLauncher(double speed) {
-    launcherLeft.set(-speed);
-    launcherRight.set(speed);
+  public void runShooter(double speed) {
+    shooterLeft.set(-speed);
+    shooterRight.set(speed);
   }
 
   @Override
