@@ -13,26 +13,30 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.FlopperArm;
 import frc.robot.subsystems.FlopperWrist;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.TeleopDrive;
+import frc.robot.commands.TimedClimb;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
-import frc.robot.commands.FlopperCommands.FlopperFlip;
+// import frc.robot.commands.FlopperCommands.FlopperFlip;
 import frc.robot.commands.FlopperCommands.FlopperReady;
 import frc.robot.commands.FlopperCommands.FlopperZero;
-import frc.robot.commands.FlopperCommands.FlopperShoot;
+// import frc.robot.commands.FlopperCommands.FlopperShoot;
 import frc.robot.commands.FlopperCommands.FlopperWristCommand;
 import frc.robot.commands.IntakeCommands.IndexerCommand;
 import frc.robot.commands.IntakeCommands.IndexerUp;
-import frc.robot.commands.IntakeCommands.IntakeFirst;
+import frc.robot.commands.IntakeCommands.IntakeBasic;
 import frc.robot.commands.IntakeCommands.IntakeFinal;
 import frc.robot.commands.IntakeCommands.IntakeInCommand;
 import frc.robot.commands.IntakeCommands.TimedIndexer;
 import frc.robot.commands.LEDCommands.RainbowCommand;
-import frc.robot.commands.ShootCommands.AmpShoot;
+import frc.robot.commands.ShootCommands.AmpShootBasic;
+import frc.robot.commands.ShootCommands.AmpShootFinal;
 import frc.robot.commands.ShootCommands.ShooterCommand;
+import frc.robot.commands.ShootCommands.SpeakerShoot;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -49,11 +53,13 @@ public class RobotContainer {
 
     public static ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
     public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    public static IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
     public static FlopperArm flopperArm = new FlopperArm();
     public static FlopperWrist flopperWrist = new FlopperWrist();
 
-    public static IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
+    public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+
     public static LEDSubsystem ledSubsystem = new LEDSubsystem();
 
     // driver xbox
@@ -82,9 +88,9 @@ public class RobotContainer {
 
         TeleopDrive xBoxTeleopDrive = new TeleopDrive(
             swerveSubsystem,
-            () -> MathUtil.applyDeadband(-driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-            () -> MathUtil.applyDeadband(-driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-            () -> -driverController.getRightX(), () -> true);
+            () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
+            () -> -driverController.getRightX() * 0.7, () -> true);
 
         swerveSubsystem.setDefaultCommand(xBoxTeleopDrive);
 
@@ -99,16 +105,18 @@ public class RobotContainer {
         // operatorX.whileTrue(new FlopperWristCommand(0.1));
         // operatorY.whileTrue(new FlopperWristCommand(-0.1));
 
-        operatorA.onTrue(new FlopperReady());
-        operatorB.onTrue(new FlopperFlip());
-        operatorLeftBumper.onTrue(new FlopperShoot());
-        operatorRightBumper.onTrue(new FlopperZero());
-
+        // operatorA.onTrue(new FlopperReady());
+        // operatorLeftBumper.onTrue(new FlopperShoot());
+        
         // operatorLeftBumper.onTrue(new FlopperWristCommand(0.1, 45));
         // operatorRightBumper.onTrue(new FlopperWristCommand(-0.1, 0));
 
-        operatorX.onTrue(new IntakeFinal());
-        operatorY.whileTrue(new AmpShoot());
+        operatorA.onTrue(new IntakeFinal());
+        operatorB.onTrue(new SpeakerShoot());
+        operatorRightBumper.onTrue(new FlopperZero());
+        operatorLeftBumper.onTrue(new AmpShootFinal());
+        operatorX.onTrue(new TimedClimb(0.5, 4000));
+
 
         // operatorA.onTrue(new TimedIndexer(0.3, 4000));
         // operatorB.whileTrue(new LauncherCommand(0.2));

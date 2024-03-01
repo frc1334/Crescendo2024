@@ -16,14 +16,14 @@ import frc.robot.Constants.FlopperConstants;
 public class FlopperWrist extends SubsystemBase {
 
     CANSparkMax wrist;
-    RelativeEncoder encoder;
+    RelativeEncoder wristEncoder;
 
   /** Creates a new FlopperWrist. */
   public FlopperWrist() {
 
     wrist = new CANSparkMax(FlopperConstants.FLOPPER_WRIST, MotorType.kBrushless);
-    encoder = wrist.getEncoder();
-    encoder.setPosition(0);
+    wristEncoder = wrist.getEncoder();
+    wristEncoder.setPosition(0);
   }
 
 
@@ -31,11 +31,15 @@ public class FlopperWrist extends SubsystemBase {
     wrist.set(speed);
   }
 
-  public boolean encoderLimitReached(double setpoint) {
-    double encoderPosition = encoder.getPosition();
+  public double wristEncoderPosition() {
+    return wristEncoder.getPosition();
+  }
+
+  public boolean wristEncoderLimitReached(double setpoint) {
+    double encoderPosition = wristEncoder.getPosition();
     double error = Math.abs(encoderPosition - setpoint);
 
-    if (error <= 0.1) {
+    if (error <= 0.5) {
       return true;
     } else {
       return false;

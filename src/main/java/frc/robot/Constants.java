@@ -43,6 +43,8 @@ public class Constants {
     }
 
     public static class ClimberConstants {
+        public static final int CLIMBER_LEFT = 1;
+        public static final int CLIMBER_RIGHT = 8;
 
     }
 

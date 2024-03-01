@@ -16,24 +16,28 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 public class FlopperArm extends SubsystemBase {
 
   CANSparkMax arm;
-  RelativeEncoder encoder;
+  RelativeEncoder armEncoder;
 
   /** Creates a new IntakeSubsystem. */
   public FlopperArm() {
     arm = new CANSparkMax(FlopperConstants.FLOPPER_ARM, MotorType.kBrushless);
-    encoder = arm.getEncoder();
-    encoder.setPosition(0);
+    armEncoder = arm.getEncoder();
+    armEncoder.setPosition(0);
   }
 
   public void runFlopperArm(double speed) {
     arm.set(speed);
   }
 
-  public boolean encoderLimitReached(double setpoint) {
-    double encoderPosition = encoder.getPosition();
+  public double armEncoderPosition() {
+    return armEncoder.getPosition();
+  }
+
+  public boolean armEncoderLimitReached(double setpoint) {
+    double encoderPosition = armEncoder.getPosition();
     double error = Math.abs(encoderPosition - setpoint);
 
-    if (error <= 0.05) {
+    if (error <= 0.1) {
       return true;
     } else {
       return false;

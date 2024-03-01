@@ -15,6 +15,6 @@ public class IntakeFinal extends SequentialCommandGroup {
   public IntakeFinal() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new IntakeFirst(), new IntakeIndexerUp(), new IndexerShooterDown());
+    addCommands(new IntakeBasic(), new IndexerShooterDown());
   }
 }

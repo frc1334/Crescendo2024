@@ -14,6 +14,6 @@ public class FlopperReady extends SequentialCommandGroup {
   public FlopperReady() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FlopperArmCommand(0.1, 0.9), new FlopperWristCommand(0.1, 18));
+    addCommands(new FlopperArmCommand(0.4, 0.8), new FlopperWristCommand(0.2, 18));
   }
 }

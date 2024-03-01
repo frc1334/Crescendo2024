@@ -4,6 +4,7 @@
 
 package frc.robot.commands.FlopperCommands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -26,19 +27,24 @@ public class FlopperWristCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // if (RobotContainer.flopperWrist.wristEncoderPosition() > setpoint) {
+    //   speed = -speed;
+    // }
+    // SmartDashboard.putNumber("wrist position", RobotContainer.flopperWrist.wristEncoderPosition());
+    // SmartDashboard.putNumber("wrist speed", speed);
     RobotContainer.flopperWrist.runFlopperWrist(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-      RobotContainer.flopperWrist.runFlopperWrist(0);
+    RobotContainer.flopperWrist.runFlopperWrist(0);
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.flopperWrist.encoderLimitReached(setpoint);
+    return RobotContainer.flopperWrist.wristEncoderLimitReached(setpoint);
   }
 }

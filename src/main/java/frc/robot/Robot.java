@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -38,11 +40,14 @@ public class Robot extends TimedRobot {
   
   
   CommandScheduler commandScheduler = CommandScheduler.getInstance();
+  public static UsbCamera Camera;
 
   
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
+    Camera = CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
 
   }
 

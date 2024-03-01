@@ -12,9 +12,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class FlopperZero extends SequentialCommandGroup {
   /** Creates a new FlopperBack. */
   public FlopperZero() {
+    
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FlopperWristCommand(-0.1, 0), new FlopperArmCommand(-0.1, 0));
+    addCommands(new FlopperWristCommand(-0.2, 0), new FlopperArmCommand(-0.2, 0));
 
   }
 }

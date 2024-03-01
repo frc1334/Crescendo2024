@@ -10,9 +10,9 @@ import frc.robot.commands.ShootCommands.ShooterCommand;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeFirst extends ParallelRaceGroup {
+public class IntakeBasic extends ParallelRaceGroup {
   /** Creates a new Intake. */
-  public IntakeFirst() {
+  public IntakeBasic() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new IntakeInCommand(1), new IndexerCommand(1));

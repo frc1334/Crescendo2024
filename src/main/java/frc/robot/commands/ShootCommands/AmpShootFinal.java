@@ -4,17 +4,18 @@
 
 package frc.robot.commands.ShootCommands;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.IntakeCommands.IndexerWait;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.FlopperCommands.FlopperReady;
+import frc.robot.commands.FlopperCommands.FlopperWristCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AmpShoot extends ParallelCommandGroup {
-  /** Creates a new ShootingSequence. */
-  public AmpShoot() {
+public class AmpShootFinal extends SequentialCommandGroup {
+  /** Creates a new AmpShootFinal. */
+  public AmpShootFinal() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ShooterCommand(0.2), new IndexerWait());
+    addCommands(new FlopperReady(), new AmpShootBasic(), new FlopperWristCommand(0.4, 45));
   }
 }

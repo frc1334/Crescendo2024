@@ -4,6 +4,7 @@
 
 package frc.robot.commands.FlopperCommands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDConstants;
@@ -27,8 +28,13 @@ public class FlopperArmCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // if (RobotContainer.flopperArm.armEncoderPosition() > setpoint) {
+    //   speed = -speed;
+    // }
+    // SmartDashboard.putNumber("arm position", RobotContainer.flopperArm.armEncoderPosition());
+    // SmartDashboard.putNumber("arm speed", speed);
+
     RobotContainer.flopperArm.runFlopperArm(speed);
-    RobotContainer.ledSubsystem.ledColour(LEDConstants.BLUE);
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +46,6 @@ public class FlopperArmCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return RobotContainer.flopperArm.encoderLimitReached(setpoint);
+    return RobotContainer.flopperArm.armEncoderLimitReached(setpoint);
   }
 }
