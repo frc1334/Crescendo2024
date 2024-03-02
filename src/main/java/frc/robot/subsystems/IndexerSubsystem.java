@@ -28,7 +28,7 @@ public class IndexerSubsystem extends SubsystemBase {
     indexerLeft = new Spark(IndexerConstants.INDEXER_MOTOR_LEFT);
     indexerRight = new Spark(IndexerConstants.INDEXER_MOTOR_RIGHT);
 
-    proximitySwitch = new DigitalInput(Constants.OtherConstants.PROXIMITY_PORT);
+    proximitySwitch = new DigitalInput(IndexerConstants.PROXIMITY_PORT);
 
 
   }

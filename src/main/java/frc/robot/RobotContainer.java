@@ -9,6 +9,7 @@ import java.io.File;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -18,6 +19,7 @@ import frc.robot.subsystems.FlopperArm;
 import frc.robot.subsystems.FlopperWrist;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
+import frc.robot.commands.AbsoluteDrive;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TimedClimb;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
@@ -86,14 +88,23 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
 
-        TeleopDrive xBoxTeleopDrive = new TeleopDrive(
+        // Command absoluteDrive = swerveSubsystem.driveCommand(
+        //     () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
+        //     () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
+        //     () -> driverController.getRightX() * 0.5);
+
+        // Command fieldOrientedDrive = swerveSubsystem.driveCommand(
+        //     () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        //     () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        //     () -> driverController.getRightX() * 0.5);
+
+        TeleopDrive teleopDrive = new TeleopDrive(
             swerveSubsystem,
             () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
             () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
-            () -> -driverController.getRightX() * 0.7, () -> true);
+            () -> driverController.getRightX() * 0.7, () -> true);
 
-        swerveSubsystem.setDefaultCommand(xBoxTeleopDrive);
-
+        swerveSubsystem.setDefaultCommand(teleopDrive);
         
     }
 
@@ -111,11 +122,13 @@ public class RobotContainer {
         // operatorLeftBumper.onTrue(new FlopperWristCommand(0.1, 45));
         // operatorRightBumper.onTrue(new FlopperWristCommand(-0.1, 0));
 
-        operatorA.onTrue(new IntakeFinal());
+
+        operatorA.whileTrue(new IntakeFinal());
         operatorB.onTrue(new SpeakerShoot());
         operatorRightBumper.onTrue(new FlopperZero());
         operatorLeftBumper.onTrue(new AmpShootFinal());
-        operatorX.onTrue(new TimedClimb(0.5, 4000));
+        operatorX.onTrue(new TimedClimb(0.5, 1000));
+        operatorY.onTrue(new TimedClimb(-0.5, 1000));
 
 
         // operatorA.onTrue(new TimedIndexer(0.3, 4000));

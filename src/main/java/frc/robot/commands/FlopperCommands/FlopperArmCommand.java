@@ -46,6 +46,7 @@ public class FlopperArmCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    
     return RobotContainer.flopperArm.armEncoderLimitReached(setpoint);
   }
 }

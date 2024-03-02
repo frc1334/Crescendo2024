@@ -17,12 +17,14 @@ public class FlopperArm extends SubsystemBase {
 
   CANSparkMax arm;
   RelativeEncoder armEncoder;
+  boolean toggle;
 
   /** Creates a new IntakeSubsystem. */
   public FlopperArm() {
     arm = new CANSparkMax(FlopperConstants.FLOPPER_ARM, MotorType.kBrushless);
     armEncoder = arm.getEncoder();
     armEncoder.setPosition(0);
+    toggle = false;
   }
 
   public void runFlopperArm(double speed) {
@@ -43,7 +45,14 @@ public class FlopperArm extends SubsystemBase {
       return false;
     }
   }
+
+  public void toggle() {
+    toggle = !toggle;
+  }
   
+  public boolean isArmOut() {
+    return toggle;
+  }
 
   @Override
   public void periodic() {

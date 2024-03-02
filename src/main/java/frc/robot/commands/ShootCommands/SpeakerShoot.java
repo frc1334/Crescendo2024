@@ -15,6 +15,6 @@ public class SpeakerShoot extends ParallelRaceGroup {
   public SpeakerShoot() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TimedShooter(0.6, 3000), new IndexerWait());
+    addCommands(new TimedShooter(0.7, 3000), new IndexerWait());
   }
 }
