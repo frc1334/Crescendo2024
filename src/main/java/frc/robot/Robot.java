@@ -17,8 +17,10 @@ import frc.robot.subsystems.LEDSubsystem;
 // import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDConstants;
+import frc.robot.commands.AutoCommands.MiddleAutoFinal;
 import frc.robot.commands.LEDCommands.RainbowCommand;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -37,9 +39,14 @@ public class Robot extends TimedRobot {
    */
 
   private RobotContainer robotContainer;
-  
-  
+
   CommandScheduler commandScheduler = CommandScheduler.getInstance();
+  private final SendableChooser<String> autoChooser = new SendableChooser<>();
+
+  Command autoCommand = null;
+  private static final String AUTO_MIDDLE = "Middle Auto Sequence";
+  
+  
   public static UsbCamera Camera;
 
   
@@ -49,6 +56,8 @@ public class Robot extends TimedRobot {
     Camera = CameraServer.startAutomaticCapture();
     CameraServer.startAutomaticCapture();
 
+    autoChooser.setDefaultOption(AUTO_MIDDLE, AUTO_MIDDLE);
+
   }
 
   @Override
@@ -57,7 +66,20 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+
+    String selectedAuto = autoChooser.getSelected();
+
+    switch (selectedAuto) {
+    
+    default:
+        // Default to score and exit zone
+        autoCommand = new MiddleAutoFinal();
+        break;
+    }
+
+    autoCommand.schedule();
+  }
 
   @Override
   public void autonomousPeriodic() {
@@ -66,12 +88,16 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    if (autoCommand != null) {
+      autoCommand.cancel();
+    }
+  }
 
   @Override
   public void teleopPeriodic() {
     commandScheduler.run();
-    RobotContainer.ledSubsystem.ledColour(LEDConstants.RED);
+    // RobotContainer.ledSubsystem.ledColour(LEDConstants.RED);
     
   }
 
@@ -80,7 +106,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    RobotContainer.ledSubsystem.ledColour(LEDConstants.WHITE);
+    RobotContainer.ledSubsystem.ledColour(LEDConstants.RED);
   }
 
   @Override

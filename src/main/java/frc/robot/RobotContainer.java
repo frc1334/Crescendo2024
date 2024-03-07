@@ -14,12 +14,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.FlopperArm;
 import frc.robot.subsystems.FlopperWrist;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.AbsoluteDrive;
+import frc.robot.commands.DriveToTag;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TimedClimb;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
@@ -61,6 +63,8 @@ public class RobotContainer {
     public static FlopperWrist flopperWrist = new FlopperWrist();
 
     public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
+
+    public static LimelightSubsystem limelightSubsystem = new LimelightSubsystem();
 
     public static LEDSubsystem ledSubsystem = new LEDSubsystem();
 
@@ -104,71 +108,27 @@ public class RobotContainer {
             () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
             () -> driverController.getRightX() * 0.7, () -> true);
 
+        
         swerveSubsystem.setDefaultCommand(teleopDrive);
         
     }
 
     private void configureBindings() {
 
-        // operatorA.whileTrue(new FlopperArmCommand(0.1));
-        // operatorB.whileTrue(new FlopperArmCommand(-0.1));
-
-        // operatorX.whileTrue(new FlopperWristCommand(0.1));
-        // operatorY.whileTrue(new FlopperWristCommand(-0.1));
-
-        // operatorA.onTrue(new FlopperReady());
-        // operatorLeftBumper.onTrue(new FlopperShoot());
-        
-        // operatorLeftBumper.onTrue(new FlopperWristCommand(0.1, 45));
-        // operatorRightBumper.onTrue(new FlopperWristCommand(-0.1, 0));
-
-
         operatorA.whileTrue(new IntakeFinal());
         operatorB.onTrue(new SpeakerShoot());
         operatorRightBumper.onTrue(new FlopperZero());
         operatorLeftBumper.onTrue(new AmpShootFinal());
-        operatorX.onTrue(new TimedClimb(0.5, 1000));
-        operatorY.onTrue(new TimedClimb(-0.5, 1000));
+        operatorX.onTrue(new TimedClimb(0.65, 0.244, 1000));
+        operatorY.onTrue(new TimedClimb(-0.65, -0.244, 1000));
 
+        driverRightBumper.whileTrue(new RainbowCommand());
 
-        // operatorA.onTrue(new TimedIndexer(0.3, 4000));
-        // operatorB.whileTrue(new LauncherCommand(0.2));
-
-        
-
-
-        // // intake
-        // operatorB.whileTrue(
-        //     new IntakeInCommand(0.6));
-
-
-        // // indexer
-        // operatorX.whileTrue(
-        //     new IndexerUp(0.3));
-        
-        // operatorY.whileTrue(
-        //     new LauncherCommand(0.1));
-
-        // operatorY.whileTrue(
-        //     new IntakeAll());
-
-
-        // operatorLeftBumper.whileTrue(
-        //     new FlopperArmCommand(0.9));
-
-        
-
-        // // launcher
-        // operatorA.whileTrue(
-        //     new LauncherCommand(0.1));
-        
-
-        // // indexer
-        // operatorX.whileTrue(
-        //     new IndexerCommand(IndexerConstants.INDEXER_FORWARD_SPEED));
-
-        // operatorY.whileTrue(
-        //     new IndexerCommand(IndexerConstants.INDEXER_REVERSE_SPEED));
+        driverLeftBumper.whileTrue(new DriveToTag(
+            swerveSubsystem,
+            () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
+            () -> limelightSubsystem.getSteer(), () -> true));
 
     }
     

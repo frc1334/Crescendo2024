@@ -66,7 +66,7 @@ public class Constants {
     }
 
     public static class LEDConstants {
-        public static final int LED_PORT = 4;
+        public static final int LED_PORT = 3;
 
         public static final int WHITE = 0xFFFFFF;
         public static final int RED = 0xFF0000;
@@ -74,6 +74,7 @@ public class Constants {
         public static final int GREEN = 0x00FF00;
         public static final int PURPLE = 0x800080;
         public static final int BLUE = 0x0000FF;
+        public static final int LIME = 0x39FF14;
     }
 
     public static class OtherConstants {

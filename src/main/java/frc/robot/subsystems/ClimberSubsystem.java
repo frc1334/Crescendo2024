@@ -18,8 +18,11 @@ public class ClimberSubsystem extends SubsystemBase {
     climberRight = new Spark(ClimberConstants.CLIMBER_RIGHT);
   }
 
-  public void runClimber(double speed) {
-    climberLeft.set(-speed);
+  public void runClimberLeft(double speed) {
+    climberLeft.set(speed);
+  }
+
+  public void runClimberRight(double speed) {
     climberRight.set(speed);
   }
 

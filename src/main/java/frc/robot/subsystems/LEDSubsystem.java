@@ -19,7 +19,7 @@ public class LEDSubsystem extends SubsystemBase {
   /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
     ledStrip = new AddressableLED(LEDConstants.LED_PORT);
-    ledBuffer = new AddressableLEDBuffer(100);
+    ledBuffer = new AddressableLEDBuffer(150);
     ledStrip.setLength(ledBuffer.getLength());
     ledStrip.setData(ledBuffer);
     ledStrip.start();
@@ -27,25 +27,6 @@ public class LEDSubsystem extends SubsystemBase {
 
   }
 
-  
-
-
-  // public void rainbow() {
-  //   int rainbowFirstPixelHue = 5;
-  //   // For every pixel
-  //   for (var i = 0; i < ledBuffer.getLength(); i++) {
-  //     // Calculate the hue - hue is easier for rainbows because the color
-  //     // shape is a circle so only one value needs to precess
-  //     final var hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
-  //     // Set the value
-  //     ledBuffer.setHSV(i, hue, 255, 128);
-  //   }
-  //   // Increase by to make the rainbow "move"
-  //   rainbowFirstPixelHue += 3;
-  //   // Check bounds
-  //   rainbowFirstPixelHue %= 180;
-  //   ledStrip.setData(ledBuffer);
-  // }
 
 
   public void ledColour(int colour) {
@@ -87,6 +68,24 @@ public class LEDSubsystem extends SubsystemBase {
     // Update the LED strip with the new colors
     ledStrip.setData(ledBuffer);
 }
+
+// public void rainbow() {
+  //   int rainbowFirstPixelHue = 5;
+  //   // For every pixel
+  //   for (var i = 0; i < ledBuffer.getLength(); i++) {
+  //     // Calculate the hue - hue is easier for rainbows because the color
+  //     // shape is a circle so only one value needs to precess
+  //     final var hue = (rainbowFirstPixelHue + (i * 180 / ledBuffer.getLength())) % 180;
+  //     // Set the value
+  //     ledBuffer.setHSV(i, hue, 255, 128);
+  //   }
+  //   // Increase by to make the rainbow "move"
+  //   rainbowFirstPixelHue += 3;
+  //   // Check bounds
+  //   rainbowFirstPixelHue %= 180;
+  //   ledStrip.setData(ledBuffer);
+  // }
+
 
 
   @Override

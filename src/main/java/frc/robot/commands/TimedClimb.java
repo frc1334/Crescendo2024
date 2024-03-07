@@ -5,20 +5,23 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class TimedClimb extends Command {
   long start;
   long duration;
-  double speed;
+  double leftSpeed;
+  double rightSpeed;
   long currentTime;
 
   /** Creates a new TimedClimb. */
-  public TimedClimb(double speed, long duration) {
+  public TimedClimb(double leftSpeed, double rightSpeed, long duration) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.climberSubsystem);
     this.duration = duration;
-    this.speed = speed;
+    this.leftSpeed = leftSpeed;
+    this.rightSpeed = rightSpeed;
   }
 
   // Called when the command is initially scheduled.
@@ -31,7 +34,8 @@ public class TimedClimb extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.climberSubsystem.runClimber(speed);
+    RobotContainer.climberSubsystem.runClimberLeft(leftSpeed);
+    RobotContainer.climberSubsystem.runClimberRight(rightSpeed);
     currentTime = System.currentTimeMillis();
 
   }
@@ -39,7 +43,8 @@ public class TimedClimb extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.climberSubsystem.runClimber(0);
+    RobotContainer.climberSubsystem.runClimberLeft(0);
+    RobotContainer.climberSubsystem.runClimberRight(0);
 
   }
 
