@@ -16,7 +16,7 @@ public class DriveIntakeParallel extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new TimedTeleopDrive(
-      RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> -0.1, () -> true, 3000),
+      RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0, () -> true, 3000),
       new IntakeWait());
   }
 }

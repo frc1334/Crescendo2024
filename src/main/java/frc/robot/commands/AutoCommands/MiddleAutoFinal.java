@@ -7,6 +7,7 @@ package frc.robot.commands.AutoCommands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.commands.ShootCommands.SpeakerShoot;
+import frc.robot.commands.ShootCommands.TimedShooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -18,8 +19,8 @@ public class MiddleAutoFinal extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new SpeakerShoot(), new DriveIntakeParallel(),
       new TimedTeleopDrive(
-      RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> 0.1, () -> true, 2800),
-      new SpeakerShoot()
+      RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> 0, () -> true, 2800),
+      new TimedShooter(0.7, 500), new SpeakerShoot()
       );
   }
 }

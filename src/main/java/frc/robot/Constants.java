@@ -28,7 +28,7 @@ public class Constants {
     public static class IndexerConstants {
         // FIXME: ids
         public static final int INDEXER_MOTOR_RIGHT = 9;
-        public static final int INDEXER_MOTOR_LEFT = 0;
+        public static final int INDEXER_MOTOR_LEFT = 4;
 
         public static final int PROXIMITY_PORT = 3;
 
@@ -63,6 +63,8 @@ public class Constants {
         // Joystick Deadband
         public static final double LEFT_X_DEADBAND = 0.1;
         public static final double LEFT_Y_DEADBAND = 0.1;
+        public static final double RIGHT_X_DEADBAND = 0.1;
+
     }
 
     public static class LEDConstants {

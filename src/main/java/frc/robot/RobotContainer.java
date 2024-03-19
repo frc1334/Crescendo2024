@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.LimelightSubsystem;
+import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.FlopperArm;
 import frc.robot.subsystems.FlopperWrist;
@@ -65,6 +66,7 @@ public class RobotContainer {
     public static ClimberSubsystem climberSubsystem = new ClimberSubsystem();
 
     public static LimelightSubsystem limelightSubsystem = new LimelightSubsystem();
+    public static CameraSubsystem cameraSubsystem = new CameraSubsystem();
 
     public static LEDSubsystem ledSubsystem = new LEDSubsystem();
 
@@ -104,25 +106,26 @@ public class RobotContainer {
 
         TeleopDrive teleopDrive = new TeleopDrive(
             swerveSubsystem,
-            () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
-            () -> driverController.getRightX() * 0.7, () -> true);
+            () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), 
+            () -> true);
 
         
         swerveSubsystem.setDefaultCommand(teleopDrive);
         
     }
 
+
     private void configureBindings() {
 
         operatorA.whileTrue(new IntakeFinal());
-        operatorB.onTrue(new SpeakerShoot());
+        operatorB.whileTrue(new ShooterCommand(0.7));
+        operatorB.onFalse(new SpeakerShoot());
         operatorRightBumper.onTrue(new FlopperZero());
         operatorLeftBumper.onTrue(new AmpShootFinal());
         operatorX.onTrue(new TimedClimb(0.65, 0.244, 1000));
         operatorY.onTrue(new TimedClimb(-0.65, -0.244, 1000));
-
-        driverRightBumper.whileTrue(new RainbowCommand());
 
         driverLeftBumper.whileTrue(new DriveToTag(
             swerveSubsystem,
@@ -130,6 +133,11 @@ public class RobotContainer {
             () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
             () -> limelightSubsystem.getSteer(), () -> true));
 
+        driverRightBumper.whileTrue(new DriveToTag(
+            swerveSubsystem,
+            () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
+            () -> cameraSubsystem.getTurnSpeed(), () -> true));
     }
     
 }

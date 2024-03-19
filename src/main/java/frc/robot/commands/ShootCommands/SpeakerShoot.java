@@ -5,7 +5,7 @@
 package frc.robot.commands.ShootCommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
-import frc.robot.commands.IntakeCommands.IndexerWait;
+import frc.robot.commands.IntakeCommands.TimedIndexer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -15,6 +15,6 @@ public class SpeakerShoot extends ParallelRaceGroup {
   public SpeakerShoot() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TimedShooter(0.7, 3000), new IndexerWait());
+    addCommands(new TimedShooter(0.7, 500), new TimedIndexer(0.5, 500));
   }
 }
