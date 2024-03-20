@@ -64,7 +64,7 @@ public class CameraSubsystem extends SubsystemBase {
     LINEAR_D = 0.0;
     drivePidController = new PIDController(LINEAR_P, 0, LINEAR_D);
 
-    ANGULAR_P = 0.1;
+    ANGULAR_P = 0.5;
     ANGULAR_D = 0.0;
     turnPidController = new PIDController(ANGULAR_P, 0, ANGULAR_D);
 
@@ -117,12 +117,12 @@ public class CameraSubsystem extends SubsystemBase {
 
     if (result.hasTargets()) {
         // First calculate range
-        double range =
-                PhotonUtils.calculateDistanceToTargetMeters(
-                        CAMERA_HEIGHT_METERS,
-                        TARGET_HEIGHT_METERS,
-                        CAMERA_PITCH_RADIANS,
-                        Units.degreesToRadians(result.getBestTarget().getPitch()));
+        // double range =
+        //         PhotonUtils.calculateDistanceToTargetMeters(
+        //                 CAMERA_HEIGHT_METERS,
+        //                 TARGET_HEIGHT_METERS,
+        //                 CAMERA_PITCH_RADIANS,
+        //                 Units.degreesToRadians(result.getBestTarget().getPitch()));
 
         // // Use this range as the measurement we give to the PID controller.
         // // -1.0 required to ensure positive PID controller effort _increases_ range
@@ -130,7 +130,8 @@ public class CameraSubsystem extends SubsystemBase {
 
         // Also calculate angular power
         // -1.0 required to ensure positive PID controller effort _increases_ yaw
-        turnSpeed = -turnPidController.calculate(result.getBestTarget().getYaw(), 0);
+        // turnSpeed = -turnPidController.calculate(result.getBestTarget().getYaw(), 0);
+        turnSpeed = result.getBestTarget().getYaw() * 0.5;
     } else {
         // If we have no targets, stay still.
         // driveSpeed = 0;

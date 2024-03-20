@@ -106,9 +106,9 @@ public class RobotContainer {
 
         TeleopDrive teleopDrive = new TeleopDrive(
             swerveSubsystem,
-            () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), 
+            () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.77, OperatorConstants.LEFT_Y_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.77, OperatorConstants.LEFT_X_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getRightX() * 0.77, OperatorConstants.RIGHT_X_DEADBAND), 
             () -> true);
 
         
@@ -127,17 +127,24 @@ public class RobotContainer {
         operatorX.onTrue(new TimedClimb(0.65, 0.244, 1000));
         operatorY.onTrue(new TimedClimb(-0.65, -0.244, 1000));
 
-        driverLeftBumper.whileTrue(new DriveToTag(
+        driverLeftBumper.whileTrue(new TeleopDrive(
             swerveSubsystem,
-            () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
-            () -> limelightSubsystem.getSteer(), () -> true));
+            () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getRightX() * 0.8, OperatorConstants.RIGHT_X_DEADBAND), 
+            () -> true));
 
-        driverRightBumper.whileTrue(new DriveToTag(
-            swerveSubsystem,
-            () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
-            () -> cameraSubsystem.getTurnSpeed(), () -> true));
+        // driverLeftBumper.whileTrue(new DriveToTag(
+        //     swerveSubsystem,
+        //     () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
+        //     () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
+        //     () -> limelightSubsystem.getSteer(), () -> true));
+
+        // driverRightBumper.whileTrue(new DriveToTag(
+        //     swerveSubsystem,
+        //     () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
+        //     () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
+        //     () -> cameraSubsystem.getTurnSpeed(), () -> true));
     }
     
 }
