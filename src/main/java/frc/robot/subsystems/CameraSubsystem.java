@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class CameraSubsystem extends SubsystemBase {
 
@@ -71,11 +72,40 @@ public class CameraSubsystem extends SubsystemBase {
     
   }
 
-  public boolean hasTargets() {
+  // public boolean hasTargets() {
+  //   var result = camera.getLatestResult();
+  //   hasTargets = result.hasTargets();
+  //   return hasTargets;
+  // }
+
+  public double getTurnSpeed() {
+    // Query the latest result from PhotonVision
     var result = camera.getLatestResult();
-    hasTargets = result.hasTargets();
-    return hasTargets;
+    // double driveSpeed;
+    double turnSpeed;
+
+    // if (camera.isConnected()) {
+    //   turnSpeed = 0.5;
+    // } else {
+    //   turnSpeed = 0;
+    // }
+
+    // return turnSpeed;
+
+    if (result.hasTargets()) {
+        // turnSpeed = -turnPidController.calculate(result.getBestTarget().getYaw(), 0);
+        turnSpeed = result.getBestTarget().getYaw() * 0.025;
+    } else {
+        // If we have no targets, stay still.
+        turnSpeed = 0;
+    }
+
+    SmartDashboard.putBoolean("target", result.hasTargets());
+    return turnSpeed;
   }
+
+
+
 
   public double getDriveSpeed() {
     // Query the latest result from PhotonVision
@@ -109,60 +139,11 @@ public class CameraSubsystem extends SubsystemBase {
     return driveSpeed;
   }
 
-  public double getTurnSpeed() {
-    // Query the latest result from PhotonVision
-    var result = camera.getLatestResult();
-    // double driveSpeed;
-    double turnSpeed;
-
-    if (result.hasTargets()) {
-        // First calculate range
-        // double range =
-        //         PhotonUtils.calculateDistanceToTargetMeters(
-        //                 CAMERA_HEIGHT_METERS,
-        //                 TARGET_HEIGHT_METERS,
-        //                 CAMERA_PITCH_RADIANS,
-        //                 Units.degreesToRadians(result.getBestTarget().getPitch()));
-
-        // // Use this range as the measurement we give to the PID controller.
-        // // -1.0 required to ensure positive PID controller effort _increases_ range
-        // driveSpeed = -drivePidController.calculate(range, GOAL_RANGE_METERS);
-
-        // Also calculate angular power
-        // -1.0 required to ensure positive PID controller effort _increases_ yaw
-        // turnSpeed = -turnPidController.calculate(result.getBestTarget().getYaw(), 0);
-        turnSpeed = result.getBestTarget().getYaw() * 0.5;
-    } else {
-        // If we have no targets, stay still.
-        // driveSpeed = 0;
-        turnSpeed = 0;
-    }
-
-    return turnSpeed;
-  }
+  
 
 
   @Override
   public void periodic() {
-    // // Query the latest result from PhotonVision
-    // var result = camera.getLatestResult();
-
-    // // Check if the latest result has any targets.
-    // hasTargets = result.hasTargets();
-
-    // // Get a list of currently tracked targets.
-    // targets = result.getTargets();
-
-    // // Get the current best target.
-    // target = result.getBestTarget();
-
-    // // Get information from target (game piece).
-    // yaw = target.getYaw();
-    // pitch = target.getPitch();
-    // area = target.getArea();
-    // skew = target.getSkew();
-    // notePose = target.getBestCameraToTarget();
-    // corners = target.getDetectedCorners();
-
+    
   }
 }
