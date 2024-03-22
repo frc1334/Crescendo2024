@@ -11,12 +11,18 @@ import frc.robot.RobotContainer;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DriveIntakeParallel extends ParallelCommandGroup {
+  double driveSpeed;
+  double turnSpeed;
+  long duration;
   /** Creates a new DriveIntakeParallel. */
-  public DriveIntakeParallel() {
+  public DriveIntakeParallel(double driveSpeed, double turnSpeed, long duration) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    this.driveSpeed = driveSpeed;
+    this.turnSpeed = turnSpeed;
+    this.duration = duration;
     addCommands(new TimedTeleopDrive(
-      RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0, () -> true, 3000),
-      new IntakeWait());
+      RobotContainer.swerveSubsystem, () -> driveSpeed, () -> 0, () -> turnSpeed, () -> true, duration),
+      new IntakeWait(2));
   }
 }

@@ -19,7 +19,7 @@ public class LEDSubsystem extends SubsystemBase {
   /** Creates a new LEDSubsystem. */
   public LEDSubsystem() {
     ledStrip = new AddressableLED(LEDConstants.LED_PORT);
-    ledBuffer = new AddressableLEDBuffer(150);
+    ledBuffer = new AddressableLEDBuffer(300);
     ledStrip.setLength(ledBuffer.getLength());
     ledStrip.setData(ledBuffer);
     ledStrip.start();

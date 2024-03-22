@@ -26,8 +26,6 @@ import frc.robot.commands.DriveToTag;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TimedClimb;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
-// import frc.robot.commands.FlopperCommands.FlopperFlip;
-import frc.robot.commands.FlopperCommands.FlopperReady;
 import frc.robot.commands.FlopperCommands.FlopperZero;
 // import frc.robot.commands.FlopperCommands.FlopperShoot;
 import frc.robot.commands.FlopperCommands.FlopperWristCommand;
@@ -38,8 +36,10 @@ import frc.robot.commands.IntakeCommands.IntakeFinal;
 import frc.robot.commands.IntakeCommands.IntakeInCommand;
 import frc.robot.commands.IntakeCommands.TimedIndexer;
 import frc.robot.commands.LEDCommands.RainbowCommand;
+import frc.robot.commands.ShootCommands.AmpComplete;
 import frc.robot.commands.ShootCommands.AmpShootBasic;
 import frc.robot.commands.ShootCommands.AmpShootFinal;
+import frc.robot.commands.ShootCommands.FlopperReady;
 import frc.robot.commands.ShootCommands.ShooterCommand;
 import frc.robot.commands.ShootCommands.SpeakerShoot;
 import frc.robot.Constants.IndexerConstants;
@@ -122,10 +122,11 @@ public class RobotContainer {
         operatorA.whileTrue(new IntakeFinal());
         operatorB.whileTrue(new ShooterCommand(0.8));
         operatorB.onFalse(new SpeakerShoot());
-        operatorRightBumper.onTrue(new FlopperZero());
         operatorLeftBumper.onTrue(new AmpShootFinal());
-        operatorX.onTrue(new TimedClimb(0.65, 0.244, 1000));
-        operatorY.onTrue(new TimedClimb(-0.65, -0.244, 1000));
+        operatorRightBumper.onTrue(new FlopperZero());
+        operatorX.onTrue(new RainbowCommand());
+        // operatorX.onTrue(new TimedClimb(0.65, 0.244, 1000));
+        // operatorY.onTrue(new TimedClimb(-0.65, -0.244, 1000));
 
         driverRightBumper.whileTrue(new TeleopDrive(
             swerveSubsystem,

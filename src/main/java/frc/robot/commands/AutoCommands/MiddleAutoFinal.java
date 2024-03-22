@@ -17,10 +17,11 @@ public class MiddleAutoFinal extends SequentialCommandGroup {
   public MiddleAutoFinal() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new SpeakerShoot(), new DriveIntakeParallel(),
+    addCommands(new TimedShooter(0.8, 700), new SpeakerShoot(), 
+      new DriveIntakeParallel(-0.7, 0, 3000),
       new TimedTeleopDrive(
-      RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> 0, () -> true, 2800),
-      new TimedShooter(0.7, 500), new SpeakerShoot()
+      RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> 0, () -> true, 3200),
+      new TimedShooter(0.7, 500), new TimedShooter(0.8, 700), new SpeakerShoot()
       );
   }
 }

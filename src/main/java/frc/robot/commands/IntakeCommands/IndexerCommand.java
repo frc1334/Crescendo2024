@@ -28,14 +28,17 @@ public class IndexerCommand extends Command {
   @Override
   public void execute() {
     RobotContainer.indexerSubsystem.runIndexer(speed);
-    // RobotContainer.ledSubsystem.ledColour(LEDConstants.YELLOW);
+    
+    if (RobotContainer.indexerSubsystem.switchActivated()) {
+      RobotContainer.ledSubsystem.ledColour(LEDConstants.GREEN);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.indexerSubsystem.runIndexer(0);
-    // RobotContainer.ledSubsystem.ledColour(LEDConstants.WHITE);
+    
   }
 
   // Returns true when the command should end.

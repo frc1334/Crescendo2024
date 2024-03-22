@@ -5,7 +5,7 @@
 package frc.robot.commands.ShootCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.FlopperCommands.FlopperReady;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.FlopperCommands.FlopperWristCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -16,6 +16,6 @@ public class AmpShootFinal extends SequentialCommandGroup {
   public AmpShootFinal() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FlopperReady(), new AmpShootBasic(), new FlopperWristCommand(0.4, 45));
+    addCommands(new AmpShootReady(), new AmpShootBasic(), new WaitCommand(0.5), new FlopperWristCommand(0.4, 45));
   }
 }

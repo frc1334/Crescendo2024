@@ -33,7 +33,7 @@ public class ShooterCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     RobotContainer.shooterSubsystem.runShooter(0);
-    RobotContainer.ledSubsystem.ledColour(LEDConstants.WHITE);
+    RobotContainer.ledSubsystem.ledColour(LEDConstants.RED);
   }
 
   // Returns true when the command should end.

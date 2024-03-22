@@ -5,6 +5,7 @@
 package frc.robot.commands.ShootCommands;
 
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import frc.robot.commands.IntakeCommands.TimedIndexer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -14,6 +15,6 @@ public class AmpShootBasic extends ParallelRaceGroup {
   public AmpShootBasic() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ShooterCommand(0.2), new IndexerWait());
+    addCommands(new ShooterCommand(0.2), new TimedIndexer(0.2, 700));
   }
 }
