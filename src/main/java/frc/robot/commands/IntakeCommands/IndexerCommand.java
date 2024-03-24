@@ -29,9 +29,9 @@ public class IndexerCommand extends Command {
   public void execute() {
     RobotContainer.indexerSubsystem.runIndexer(speed);
     
-    if (RobotContainer.indexerSubsystem.switchActivated()) {
-      RobotContainer.ledSubsystem.ledColour(LEDConstants.GREEN);
-    }
+    // if (RobotContainer.indexerSubsystem.switchActivated()) {
+    //   RobotContainer.ledSubsystem.ledColour(LEDConstants.GREEN);
+    // }
   }
 
   // Called once the command ends or is interrupted.

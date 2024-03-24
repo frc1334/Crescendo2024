@@ -28,6 +28,14 @@ public class ShooterSubsystem extends SubsystemBase {
     shooterRight.set(speed);
   }
 
+  public void runLeft(double speed) {
+    shooterLeft.set(-speed);
+  }
+
+  public void runRight(double speed) {
+    shooterRight.set(speed);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

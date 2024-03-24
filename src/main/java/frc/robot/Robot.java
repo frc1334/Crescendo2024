@@ -38,25 +38,21 @@ public class Robot extends TimedRobot {
    * initialization code.
    */
 
-  private RobotContainer robotContainer;
+  public RobotContainer robotContainer;
 
   CommandScheduler commandScheduler = CommandScheduler.getInstance();
-  private final SendableChooser<String> autoChooser = new SendableChooser<>();
 
-  Command autoCommand = null;
-  private static final String AUTO_MIDDLE = "Middle Auto Sequence";
+  private Command autoCommand;
+
   
-  
-  public static UsbCamera Camera;
+  public static UsbCamera camera0;
 
   
   @Override
   public void robotInit() {
     robotContainer = new RobotContainer();
-    Camera = CameraServer.startAutomaticCapture();
+    camera0 = CameraServer.startAutomaticCapture();
     CameraServer.startAutomaticCapture();
-
-    autoChooser.setDefaultOption(AUTO_MIDDLE, AUTO_MIDDLE);
 
   }
 
@@ -68,22 +64,16 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
 
-    String selectedAuto = autoChooser.getSelected();
+    autoCommand = robotContainer.getAutoCommand();
 
-    switch (selectedAuto) {
-    
-    default:
-        // Default to score and exit zone
-        autoCommand = new MiddleAutoFinal();
-        break;
+    // schedule the autonomous command (example)
+    if (autoCommand != null) {
+      autoCommand.schedule();
     }
-
-    autoCommand.schedule();
   }
 
   @Override
   public void autonomousPeriodic() {
-    commandScheduler.run();
     
   }
 
@@ -97,7 +87,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     commandScheduler.run();
-    // RobotContainer.ledSubsystem.ledColour(LEDConstants.RED);
     
   }
 

@@ -23,7 +23,7 @@ public class ClimberSubsystem extends SubsystemBase {
   }
 
   public void runClimberRight(double speed) {
-    climberRight.set(speed);
+    climberRight.set(-speed);
   }
 
   @Override

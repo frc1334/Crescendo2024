@@ -9,6 +9,8 @@ import java.io.File;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -25,6 +27,10 @@ import frc.robot.commands.AbsoluteDrive;
 import frc.robot.commands.DriveToTag;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TimedClimb;
+import frc.robot.commands.AutoCommands.LeftAutoFinal;
+import frc.robot.commands.AutoCommands.MiddleAutoFinal;
+import frc.robot.commands.AutoCommands.RightAutoFinal;
+import frc.robot.commands.AutoCommands.TimedTeleopDrive;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
 import frc.robot.commands.FlopperCommands.FlopperZero;
 // import frc.robot.commands.FlopperCommands.FlopperShoot;
@@ -35,11 +41,13 @@ import frc.robot.commands.IntakeCommands.IntakeBasic;
 import frc.robot.commands.IntakeCommands.IntakeFinal;
 import frc.robot.commands.IntakeCommands.IntakeInCommand;
 import frc.robot.commands.IntakeCommands.TimedIndexer;
+import frc.robot.commands.LEDCommands.PartyTime;
 import frc.robot.commands.LEDCommands.RainbowCommand;
 import frc.robot.commands.ShootCommands.AmpComplete;
 import frc.robot.commands.ShootCommands.AmpShootBasic;
 import frc.robot.commands.ShootCommands.AmpShootFinal;
 import frc.robot.commands.ShootCommands.FlopperReady;
+import frc.robot.commands.ShootCommands.RampAndShoot;
 import frc.robot.commands.ShootCommands.ShooterCommand;
 import frc.robot.commands.ShootCommands.SpeakerShoot;
 import frc.robot.Constants.IndexerConstants;
@@ -47,7 +55,7 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.IntakeSubsystem;
-
+import frc.robot.commands.AutoCommands.TimedTeleopDrive;
 
 
 /** Add your docs here. */
@@ -70,6 +78,17 @@ public class RobotContainer {
 
     public static LEDSubsystem ledSubsystem = new LEDSubsystem();
 
+    // auto
+    private final SendableChooser<String> autoChooser = new SendableChooser<>();
+    private static final String DO_NOTHING = "Do Nothing";
+    private static final String AUTO_MIDDLE = "Middle Auto";
+    private static final String AUTO_RIGHT = "Right Auto";
+    private static final String AUTO_LEFT = "Left Auto";
+    private static final String LEAVE_ZONE = "Leave Zone";
+    private static final String SHOOT_ONLY = "Shoot Only";
+
+
+
     // driver xbox
     XboxController driverController = new XboxController(0);
 
@@ -89,9 +108,22 @@ public class RobotContainer {
     JoystickButton operatorY = new JoystickButton(operatorController, 4);
     JoystickButton operatorLeftBumper = new JoystickButton(operatorController, 5);
     JoystickButton operatorRightBumper = new JoystickButton(operatorController, 6);
+    JoystickButton operatorLeftStick = new JoystickButton(operatorController, 9);
 
 
     public RobotContainer() {
+        // Put the auto patterns on the SmartDashboard
+        autoChooser.setDefaultOption(DO_NOTHING, DO_NOTHING);
+        autoChooser.addOption(AUTO_MIDDLE, AUTO_MIDDLE);
+        autoChooser.addOption(AUTO_LEFT, AUTO_LEFT);
+        autoChooser.addOption(AUTO_RIGHT, AUTO_RIGHT);
+        autoChooser.addOption(LEAVE_ZONE, LEAVE_ZONE);
+        autoChooser.addOption(SHOOT_ONLY, SHOOT_ONLY);
+
+
+        SmartDashboard.putData("AutoPattern", autoChooser);
+
+        
         configureBindings();
 
         // Command absoluteDrive = swerveSubsystem.driveCommand(
@@ -124,9 +156,10 @@ public class RobotContainer {
         operatorB.onFalse(new SpeakerShoot());
         operatorLeftBumper.onTrue(new AmpShootFinal());
         operatorRightBumper.onTrue(new FlopperZero());
-        operatorX.onTrue(new RainbowCommand());
-        // operatorX.onTrue(new TimedClimb(0.65, 0.244, 1000));
-        // operatorY.onTrue(new TimedClimb(-0.65, -0.244, 1000));
+        operatorX.onTrue(new TimedClimb(0.8, 0.8, 2700));
+        operatorY.onTrue(new TimedClimb(-0.8, -0.8, 2700));
+
+        operatorLeftStick.onTrue(new PartyTime());
 
         driverRightBumper.whileTrue(new TeleopDrive(
             swerveSubsystem,
@@ -153,6 +186,39 @@ public class RobotContainer {
             () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.7, OperatorConstants.LEFT_Y_DEADBAND),
             () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.7, OperatorConstants.LEFT_X_DEADBAND),
             () -> cameraSubsystem.getTurnSpeed(), () -> true));
+    }
+
+    public Command getAutoCommand() {
+
+        // At the beginning of auto, get the selected pattern and schedule the auto
+        String selectedAuto = autoChooser.getSelected();
+        
+        System.out.println("Auto Selected : " + selectedAuto);
+        
+        switch (selectedAuto) {
+        
+        case DO_NOTHING:
+            return new InstantCommand();
+            
+        case AUTO_MIDDLE:
+            return new MiddleAutoFinal();
+
+        case AUTO_LEFT:
+            return new LeftAutoFinal();
+
+        case AUTO_RIGHT:
+            return new RightAutoFinal();
+
+        case LEAVE_ZONE:
+            return new TimedTeleopDrive(swerveSubsystem, () -> -0.7, () -> 0, () -> 0, 
+                () -> true, 5000);
+
+        case SHOOT_ONLY:
+            return new RampAndShoot();
+            
+        default:
+            return new InstantCommand();
+        }
     }
     
 }
