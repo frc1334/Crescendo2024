@@ -10,6 +10,7 @@ import frc.robot.commands.ShootCommands.SideSpeakerShoot;
 import frc.robot.commands.ShootCommands.SpeakerShoot;
 import frc.robot.commands.ShootCommands.TimedShooter;
 import frc.robot.commands.ShootCommands.TimedSideShooter;
+import frc.robot.commands.AutoCommands.TimedTeleopDrive;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,13 +20,14 @@ public class LeftAutoFinal extends SequentialCommandGroup {
   public LeftAutoFinal() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TimedSideShooter(0.9, 0.7, 1000), 
+    addCommands(new TimedSideShooter(0.9, 0.7, 2000), 
       new SideSpeakerShoot(0.9, 0.7), 
-      new DriveIntakeParallel(-0.7, RobotContainer.cameraSubsystem.getTurnSpeed(), 3200),
       new TimedTeleopDrive(
-        RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> RobotContainer.limelightSubsystem.getSteer(), 
-        () -> true, 3300),
-      new TimedSideShooter(0.9, 0.7, 1000), new SideSpeakerShoot(0.9, 0.7)
+        RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0, 
+        () -> true, 3000),
+      new TimedTeleopDrive(
+        RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0.8, 
+        () -> true, 1000)
       );
   }
 }

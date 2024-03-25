@@ -7,6 +7,7 @@ package frc.robot.commands.AutoCommands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.commands.ShootCommands.RampAndShoot;
 import frc.robot.commands.ShootCommands.SideSpeakerShoot;
 import frc.robot.commands.ShootCommands.TimedSideShooter;
 
@@ -18,13 +19,13 @@ public class RightAutoFinal extends SequentialCommandGroup {
   public RightAutoFinal() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TimedSideShooter(0.8, 0.9, 700), 
-      new SideSpeakerShoot(0.8, 0.9), 
-      new DriveIntakeParallel(-0.7, RobotContainer.cameraSubsystem.getTurnSpeed(), 3200),
+    addCommands(new RampAndShoot(), 
       new TimedTeleopDrive(
-        RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> RobotContainer.limelightSubsystem.getSteer(), 
-        () -> true, 3300),
-      new TimedSideShooter(0.8, 0.9, 700), new SideSpeakerShoot(0.8, 0.9)
+        RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0, 
+        () -> true, 3000),
+      new TimedTeleopDrive(
+        RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> -0.8, 
+        () -> true, 1000)
       );
   }
 }

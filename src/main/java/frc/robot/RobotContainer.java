@@ -46,6 +46,7 @@ import frc.robot.commands.LEDCommands.RainbowCommand;
 import frc.robot.commands.ShootCommands.AmpComplete;
 import frc.robot.commands.ShootCommands.AmpShootBasic;
 import frc.robot.commands.ShootCommands.AmpShootFinal;
+import frc.robot.commands.ShootCommands.AmpShootReady;
 import frc.robot.commands.ShootCommands.FlopperReady;
 import frc.robot.commands.ShootCommands.RampAndShoot;
 import frc.robot.commands.ShootCommands.ShooterCommand;
@@ -154,7 +155,8 @@ public class RobotContainer {
         operatorA.whileTrue(new IntakeFinal());
         operatorB.whileTrue(new ShooterCommand(0.8));
         operatorB.onFalse(new SpeakerShoot());
-        operatorLeftBumper.onTrue(new AmpShootFinal());
+        operatorLeftBumper.whileTrue(new AmpShootReady());
+        operatorLeftBumper.onFalse(new AmpShootFinal());
         operatorRightBumper.onTrue(new FlopperZero());
         operatorX.onTrue(new TimedClimb(0.8, 0.8, 2700));
         operatorY.onTrue(new TimedClimb(-0.8, -0.8, 2700));

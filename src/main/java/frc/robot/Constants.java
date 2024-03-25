@@ -30,7 +30,7 @@ public class Constants {
         public static final int INDEXER_MOTOR_RIGHT = 9;
         public static final int INDEXER_MOTOR_LEFT = 4;
 
-        public static final int PROXIMITY_PORT = 3;
+        public static final int PROXIMITY_PORT = 9;
 
 
         public static final double INDEXER_FORWARD_SPEED = 0.2;

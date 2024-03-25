@@ -5,8 +5,10 @@
 package frc.robot.commands.ShootCommands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
 import frc.robot.commands.FlopperCommands.FlopperWristCommand;
+import frc.robot.commands.LEDCommands.ColourCommand;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -16,6 +18,6 @@ public class FlopperReady extends SequentialCommandGroup {
   public FlopperReady() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new FlopperArmCommand(0.4, 0.8), new FlopperWristCommand(0.4, 18));
+    addCommands(new FlopperArmCommand(0.4, 0.8), new FlopperWristCommand(0.4, 18), new ColourCommand(LEDConstants.BLUE));
   }
 }
