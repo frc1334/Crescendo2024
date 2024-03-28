@@ -6,12 +6,13 @@ package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LEDConstants;
+import frc.robot.commands.LEDCommands.ColourCommand;
 import frc.robot.RobotContainer;
 
-public class IntakeInCommand extends Command {
+public class IntakeCommand extends Command {
   double speed;
   /** Creates a new IntakeInCommand. */
-  public IntakeInCommand(double speed) {
+  public IntakeCommand(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.intakeSubsystem);
 
@@ -26,22 +27,18 @@ public class IntakeInCommand extends Command {
   @Override
   public void execute() {
     RobotContainer.intakeSubsystem.intakeIn(speed);
+   
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     RobotContainer.intakeSubsystem.intakeIn(0);
-
-
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (RobotContainer.ledSubsystem.switchActivated()) {
-    //   RobotContainer.ledSubsystem.ledColour(LEDConstants.YELLOW);
-    // }
     return false;
   }
 }

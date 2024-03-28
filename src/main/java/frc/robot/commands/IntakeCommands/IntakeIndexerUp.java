@@ -14,6 +14,6 @@ public class IntakeIndexerUp extends ParallelRaceGroup {
   public IntakeIndexerUp() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new IntakeInCommand(1), new TimedIndexer(1, 500));
+    addCommands(new IntakeCommand(1), new TimedIndexer(1, 500));
   }
 }

@@ -13,16 +13,16 @@ import frc.robot.commands.ShootCommands.TimedShooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class MiddleAutoFinal extends SequentialCommandGroup {
+public class MiddleTwoPiece extends SequentialCommandGroup {
   /** Creates a new MiddleAutoFinal. */
-  public MiddleAutoFinal() {
+  public MiddleTwoPiece() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new RampAndShoot(), 
-      new DriveIntakeParallel(-0.7, RobotContainer.cameraSubsystem.getTurnSpeed(), 3000),
+      new DriveIntakeParallel(0.7, RobotContainer.cameraSubsystem.getTurnSpeed(), 2500),
       new TimedTeleopDrive(
-        RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> RobotContainer.limelightSubsystem.getSteer(), 
-        () -> true, 3200),
+        RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> RobotContainer.limelightSubsystem.getSteer(), 
+        () -> true, 2700),
       new RampAndShoot()
       );
   }

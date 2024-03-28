@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.PIDConstants;
+
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
@@ -18,33 +20,21 @@ public class Constants {
     }
 
     public static class IntakeConstants {
-        // FIXME: ids
         public static final int INTAKE_MOTOR = 7;
-
-        public static final double INTAKE_SPEED = 0;
-
+        public static final int BOTTOM_SENSOR = 7;
     }
 
     public static class IndexerConstants {
-        // FIXME: ids
         public static final int INDEXER_MOTOR_RIGHT = 9;
         public static final int INDEXER_MOTOR_LEFT = 4;
 
-        public static final int PROXIMITY_PORT = 9;
-
-
-        public static final double INDEXER_FORWARD_SPEED = 0.2;
-        public static final double INDEXER_REVERSE_SPEED = -0.1;
+        public static final int UPPER_SENSOR = 9;
 
     }
 
     public static class ShooterConstants {
         public static final int SHOOTER_MOTOR_LEFT = 2;
         public static final int SHOOTER_MOTOR_RIGHT = 6;
-
-        // FIXME: velocity
-        public static final double LAUNCHER_SPEED_HIGH = 0.5;
-        public static final double LAUNCHER_SPEED_LOW = 0;
 
     }
 
@@ -77,6 +67,12 @@ public class Constants {
         public static final int PURPLE = 0x800080;
         public static final int BLUE = 0x0000FF;
         public static final int LIME = 0x39FF14;
+    }
+
+    public static final class AutonConstants {
+
+        public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
+        public static final PIDConstants ANGLE_PID   = new PIDConstants(0.4, 0, 0.01);
     }
 
     public static class OtherConstants {

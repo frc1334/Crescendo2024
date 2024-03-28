@@ -15,6 +15,6 @@ public class IntakeBasic extends ParallelRaceGroup {
   public IntakeBasic() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new IntakeInCommand(1), new IndexerCommand(1));
+    addCommands(new IntakeCommand(1), new IndexerCommand(1));
   }
 }

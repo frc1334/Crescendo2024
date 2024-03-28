@@ -17,7 +17,7 @@ import frc.robot.subsystems.LEDSubsystem;
 // import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.LEDConstants;
-import frc.robot.commands.AutoCommands.MiddleAutoFinal;
+import frc.robot.commands.AutoCommands.MiddleTwoPiece;
 import frc.robot.commands.LEDCommands.RainbowCommand;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -87,7 +87,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     commandScheduler.run();
-    
   }
 
   @Override

@@ -14,12 +14,16 @@ import frc.robot.commands.ShootCommands.TimedSideShooter;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class RightAutoFinal extends SequentialCommandGroup {
+public class RightShootAndLeave extends SequentialCommandGroup {
   /** Creates a new RightAutoFinal. */
-  public RightAutoFinal() {
+  public RightShootAndLeave() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new RampAndShoot(), 
+    addCommands(
+      new TimedTeleopDrive(
+        RobotContainer.swerveSubsystem, () -> 0, () -> 0, () -> 0.8, 
+        () -> true, 200),
+      new RampAndShoot(), 
       new TimedTeleopDrive(
         RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0, 
         () -> true, 3000),

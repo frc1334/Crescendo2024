@@ -15,15 +15,19 @@ import frc.robot.commands.AutoCommands.TimedTeleopDrive;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class LeftAutoFinal extends SequentialCommandGroup {
+public class LeftShootAndLeave extends SequentialCommandGroup {
   /** Creates a new LeftAutoFinal. */
-  public LeftAutoFinal() {
+  public LeftShootAndLeave() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TimedSideShooter(0.9, 0.7, 2000), 
+    addCommands(
+      new TimedTeleopDrive(
+        RobotContainer.swerveSubsystem, () -> 0, () -> 0, () -> -0.8, 
+        () -> true, 200),
+      new TimedSideShooter(0.9, 0.7, 2000), 
       new SideSpeakerShoot(0.9, 0.7), 
       new TimedTeleopDrive(
-        RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0, 
+        RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> 0, 
         () -> true, 3000),
       new TimedTeleopDrive(
         RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0.8, 

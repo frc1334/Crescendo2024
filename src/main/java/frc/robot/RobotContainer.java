@@ -6,12 +6,17 @@ package frc.robot;
 
 import java.io.File;
 
+import com.fasterxml.jackson.databind.util.Named;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -27,9 +32,9 @@ import frc.robot.commands.AbsoluteDrive;
 import frc.robot.commands.DriveToTag;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TimedClimb;
-import frc.robot.commands.AutoCommands.LeftAutoFinal;
-import frc.robot.commands.AutoCommands.MiddleAutoFinal;
-import frc.robot.commands.AutoCommands.RightAutoFinal;
+import frc.robot.commands.AutoCommands.LeftShootAndLeave;
+import frc.robot.commands.AutoCommands.MiddleTwoPiece;
+import frc.robot.commands.AutoCommands.RightShootAndLeave;
 import frc.robot.commands.AutoCommands.TimedTeleopDrive;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
 import frc.robot.commands.FlopperCommands.FlopperZero;
@@ -39,8 +44,9 @@ import frc.robot.commands.IntakeCommands.IndexerCommand;
 import frc.robot.commands.IntakeCommands.IndexerUp;
 import frc.robot.commands.IntakeCommands.IntakeBasic;
 import frc.robot.commands.IntakeCommands.IntakeFinal;
-import frc.robot.commands.IntakeCommands.IntakeInCommand;
+import frc.robot.commands.IntakeCommands.IntakeCommand;
 import frc.robot.commands.IntakeCommands.TimedIndexer;
+import frc.robot.commands.LEDCommands.ColourCommand;
 import frc.robot.commands.LEDCommands.PartyTime;
 import frc.robot.commands.LEDCommands.RainbowCommand;
 import frc.robot.commands.ShootCommands.AmpComplete;
@@ -53,6 +59,7 @@ import frc.robot.commands.ShootCommands.ShooterCommand;
 import frc.robot.commands.ShootCommands.SpeakerShoot;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -82,11 +89,13 @@ public class RobotContainer {
     // auto
     private final SendableChooser<String> autoChooser = new SendableChooser<>();
     private static final String DO_NOTHING = "Do Nothing";
-    private static final String AUTO_MIDDLE = "Middle Auto";
-    private static final String AUTO_RIGHT = "Right Auto";
-    private static final String AUTO_LEFT = "Left Auto";
+    private static final String MIDDLE_TWO = "MiddleTwoPiece";
+    private static final String RIGHT_SHOOT_LEAVE = "RightShootLeave";
+    private static final String LEFT_SHOOT_LEAVE = "LeftShootLeave";
     private static final String LEAVE_ZONE = "Leave Zone";
     private static final String SHOOT_ONLY = "Shoot Only";
+    private static final String FOUR_PIECE = "Four Piece";
+    private static final String INTAKE_1 = "Intake1";
 
 
 
@@ -113,13 +122,21 @@ public class RobotContainer {
 
 
     public RobotContainer() {
+
+        NamedCommands.registerCommand("RampAndShoot", new RampAndShoot());
+        NamedCommands.registerCommand("IntakeFinal", new IntakeFinal());
+        NamedCommands.registerCommand("SpeakerShoot", new SpeakerShoot());
+        NamedCommands.registerCommand("ShooterCommand", new ShooterCommand(0.8));
+
         // Put the auto patterns on the SmartDashboard
         autoChooser.setDefaultOption(DO_NOTHING, DO_NOTHING);
-        autoChooser.addOption(AUTO_MIDDLE, AUTO_MIDDLE);
-        autoChooser.addOption(AUTO_LEFT, AUTO_LEFT);
-        autoChooser.addOption(AUTO_RIGHT, AUTO_RIGHT);
+        autoChooser.addOption(MIDDLE_TWO, MIDDLE_TWO);
+        autoChooser.addOption(LEFT_SHOOT_LEAVE, LEFT_SHOOT_LEAVE);
+        autoChooser.addOption(RIGHT_SHOOT_LEAVE, RIGHT_SHOOT_LEAVE);
         autoChooser.addOption(LEAVE_ZONE, LEAVE_ZONE);
         autoChooser.addOption(SHOOT_ONLY, SHOOT_ONLY);
+        autoChooser.addOption(FOUR_PIECE, FOUR_PIECE);
+        autoChooser.addOption(INTAKE_1, INTAKE_1);
 
 
         SmartDashboard.putData("AutoPattern", autoChooser);
@@ -144,9 +161,11 @@ public class RobotContainer {
             () -> MathUtil.applyDeadband(driverController.getRightX() * 0.9, OperatorConstants.RIGHT_X_DEADBAND), 
             () -> true);
 
-        
         swerveSubsystem.setDefaultCommand(teleopDrive);
         
+        if (intakeSubsystem.sensorActivated()) {
+            new ColourCommand(LEDConstants.YELLOW);
+        }
     }
 
 
@@ -160,6 +179,8 @@ public class RobotContainer {
         operatorRightBumper.onTrue(new FlopperZero());
         operatorX.onTrue(new TimedClimb(0.8, 0.8, 2700));
         operatorY.onTrue(new TimedClimb(-0.8, -0.8, 2700));
+
+        driverX.onTrue(Commands.runOnce(swerveSubsystem::zeroGyro));
 
         operatorLeftStick.onTrue(new PartyTime());
 
@@ -202,14 +223,14 @@ public class RobotContainer {
         case DO_NOTHING:
             return new InstantCommand();
             
-        case AUTO_MIDDLE:
-            return new MiddleAutoFinal();
+        case MIDDLE_TWO:
+            return new MiddleTwoPiece();
 
-        case AUTO_LEFT:
-            return new LeftAutoFinal();
+        case LEFT_SHOOT_LEAVE:
+            return new LeftShootAndLeave();
 
-        case AUTO_RIGHT:
-            return new RightAutoFinal();
+        case RIGHT_SHOOT_LEAVE:
+            return new RightShootAndLeave();
 
         case LEAVE_ZONE:
             return new TimedTeleopDrive(swerveSubsystem, () -> -0.7, () -> 0, () -> 0, 
@@ -217,6 +238,12 @@ public class RobotContainer {
 
         case SHOOT_ONLY:
             return new RampAndShoot();
+
+        case FOUR_PIECE:
+            return new PathPlannerAuto("FourNote");
+
+        case INTAKE_1:
+            return new PathPlannerAuto("Intake1");
             
         default:
             return new InstantCommand();

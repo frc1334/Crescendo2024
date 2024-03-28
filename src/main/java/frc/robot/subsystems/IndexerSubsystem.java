@@ -20,7 +20,7 @@ public class IndexerSubsystem extends SubsystemBase {
   Spark indexerLeft;
   Spark indexerRight;
 
-  DigitalInput proximitySwitch;
+  DigitalInput upperSensor;
 
 
   /** Creates a new IndexerSubsystem. */
@@ -28,7 +28,7 @@ public class IndexerSubsystem extends SubsystemBase {
     indexerLeft = new Spark(IndexerConstants.INDEXER_MOTOR_LEFT);
     indexerRight = new Spark(IndexerConstants.INDEXER_MOTOR_RIGHT);
 
-    proximitySwitch = new DigitalInput(IndexerConstants.PROXIMITY_PORT);
+    upperSensor = new DigitalInput(IndexerConstants.UPPER_SENSOR);
 
 
   }
@@ -39,7 +39,7 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public boolean switchActivated() {
-    return !proximitySwitch.get();
+    return !upperSensor.get();
   }
 
   @Override
