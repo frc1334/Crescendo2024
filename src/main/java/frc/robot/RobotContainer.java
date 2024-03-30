@@ -53,6 +53,7 @@ import frc.robot.commands.ShootCommands.AmpComplete;
 import frc.robot.commands.ShootCommands.AmpShootBasic;
 import frc.robot.commands.ShootCommands.AmpShootFinal;
 import frc.robot.commands.ShootCommands.AmpShootReady;
+import frc.robot.commands.ShootCommands.FlipZeroSequence;
 import frc.robot.commands.ShootCommands.FlopperReady;
 import frc.robot.commands.ShootCommands.RampAndShoot;
 import frc.robot.commands.ShootCommands.ShooterCommand;
@@ -179,6 +180,7 @@ public class RobotContainer {
         operatorRightBumper.onTrue(new FlopperZero());
         operatorX.onTrue(new TimedClimb(0.8, 0.8, 2700));
         operatorY.onTrue(new TimedClimb(-0.8, -0.8, 2700));
+
 
         driverX.onTrue(Commands.runOnce(swerveSubsystem::zeroGyro));
 

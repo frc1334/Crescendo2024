@@ -18,7 +18,7 @@ public class SpeakerShoot extends ParallelCommandGroup {
   public SpeakerShoot() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TimedShooter(0.8, 700), new TimedIndexer(0.8, 700),
+    addCommands(new TimedShooter(0.8, 1000), new TimedIndexer(0.8, 1000),
     new ColourCommand(LEDConstants.RED));
   }
 }

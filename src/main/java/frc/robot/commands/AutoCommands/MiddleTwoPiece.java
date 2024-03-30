@@ -19,9 +19,9 @@ public class MiddleTwoPiece extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new RampAndShoot(), 
-      new DriveIntakeParallel(0.7, RobotContainer.cameraSubsystem.getTurnSpeed(), 2500),
+      new DriveIntakeParallel(-0.7, 0, 2500),
       new TimedTeleopDrive(
-        RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> RobotContainer.limelightSubsystem.getSteer(), 
+        RobotContainer.swerveSubsystem, () -> 0.7, () -> 0, () -> 0, 
         () -> true, 2700),
       new RampAndShoot()
       );

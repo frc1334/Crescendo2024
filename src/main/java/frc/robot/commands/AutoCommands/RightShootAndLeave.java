@@ -20,15 +20,12 @@ public class RightShootAndLeave extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new TimedTeleopDrive(
-        RobotContainer.swerveSubsystem, () -> 0, () -> 0, () -> 0.8, 
-        () -> true, 200),
       new RampAndShoot(), 
       new TimedTeleopDrive(
         RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0, 
-        () -> true, 3000),
+        () -> true, 2500),
       new TimedTeleopDrive(
-        RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> -0.8, 
+        RobotContainer.swerveSubsystem, () -> -0.5, () -> -0.5, () -> 0, 
         () -> true, 1000)
       );
   }
