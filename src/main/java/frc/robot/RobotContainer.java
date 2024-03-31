@@ -32,8 +32,12 @@ import frc.robot.commands.AbsoluteDrive;
 import frc.robot.commands.DriveToTag;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TimedClimb;
+import frc.robot.commands.AutoCommands.DelayShoot;
+import frc.robot.commands.AutoCommands.LeftAmpSide;
+import frc.robot.commands.AutoCommands.LeftDelayShoot;
 import frc.robot.commands.AutoCommands.LeftShootAndLeave;
 import frc.robot.commands.AutoCommands.MiddleTwoPiece;
+import frc.robot.commands.AutoCommands.RightAmpSide;
 import frc.robot.commands.AutoCommands.RightShootAndLeave;
 import frc.robot.commands.AutoCommands.TimedTeleopDrive;
 import frc.robot.commands.FlopperCommands.FlopperArmCommand;
@@ -95,6 +99,11 @@ public class RobotContainer {
     private static final String LEFT_SHOOT_LEAVE = "LeftShootLeave";
     private static final String LEAVE_ZONE = "Leave Zone";
     private static final String SHOOT_ONLY = "Shoot Only";
+    private static final String DELAY_SHOOT = "Delay Shoot";
+    private static final String LEFT_DELAY_SHOOT = "LeftDelayShoot";
+
+    private static final String LEFT_AMP = "Left Amp";
+    private static final String RIGHT_AMP = "Right Amp";
     private static final String FOUR_PIECE = "Four Piece";
     private static final String INTAKE_1 = "Intake1";
 
@@ -136,6 +145,11 @@ public class RobotContainer {
         autoChooser.addOption(RIGHT_SHOOT_LEAVE, RIGHT_SHOOT_LEAVE);
         autoChooser.addOption(LEAVE_ZONE, LEAVE_ZONE);
         autoChooser.addOption(SHOOT_ONLY, SHOOT_ONLY);
+        autoChooser.addOption(DELAY_SHOOT, DELAY_SHOOT);
+        autoChooser.addOption(LEFT_DELAY_SHOOT, LEFT_DELAY_SHOOT);
+
+        autoChooser.addOption(LEFT_AMP, LEFT_AMP);
+        autoChooser.addOption(RIGHT_AMP, RIGHT_AMP);
         autoChooser.addOption(FOUR_PIECE, FOUR_PIECE);
         autoChooser.addOption(INTAKE_1, INTAKE_1);
 
@@ -173,7 +187,7 @@ public class RobotContainer {
     private void configureBindings() {
 
         operatorA.whileTrue(new IntakeFinal());
-        operatorB.whileTrue(new ShooterCommand(0.8));
+        operatorB.whileTrue(new ShooterCommand(0.9));
         operatorB.onFalse(new SpeakerShoot());
         operatorLeftBumper.whileTrue(new AmpShootReady());
         operatorLeftBumper.onFalse(new AmpShootFinal());
@@ -241,11 +255,23 @@ public class RobotContainer {
         case SHOOT_ONLY:
             return new RampAndShoot();
 
-        case FOUR_PIECE:
-            return new PathPlannerAuto("FourNote");
+        case DELAY_SHOOT:
+            return new DelayShoot();
 
-        case INTAKE_1:
-            return new PathPlannerAuto("Intake1");
+        case LEFT_DELAY_SHOOT:
+            return new LeftDelayShoot();
+
+        // case LEFT_AMP:
+        //     return new LeftAmpSide();
+        
+        // case RIGHT_AMP:
+        //     return new RightAmpSide();
+
+        // case FOUR_PIECE:
+        //     return new PathPlannerAuto("FourNote");
+
+        // case INTAKE_1:
+        //     return new PathPlannerAuto("Intake1");
             
         default:
             return new InstantCommand();
