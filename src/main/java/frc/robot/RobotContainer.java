@@ -105,7 +105,7 @@ public class RobotContainer {
     private static final String LEFT_AMP = "Left Amp";
     private static final String RIGHT_AMP = "Right Amp";
     private static final String FOUR_PIECE = "Four Piece";
-    private static final String INTAKE_1 = "Intake1";
+    private static final String TEST = "Test";
 
 
 
@@ -151,7 +151,7 @@ public class RobotContainer {
         autoChooser.addOption(LEFT_AMP, LEFT_AMP);
         autoChooser.addOption(RIGHT_AMP, RIGHT_AMP);
         autoChooser.addOption(FOUR_PIECE, FOUR_PIECE);
-        autoChooser.addOption(INTAKE_1, INTAKE_1);
+        autoChooser.addOption(TEST, TEST);
 
 
         SmartDashboard.putData("AutoPattern", autoChooser);
@@ -270,8 +270,8 @@ public class RobotContainer {
         // case FOUR_PIECE:
         //     return new PathPlannerAuto("FourNote");
 
-        // case INTAKE_1:
-        //     return new PathPlannerAuto("Intake1");
+        case TEST:
+            return new PathPlannerAuto("test");
             
         default:
             return new InstantCommand();
