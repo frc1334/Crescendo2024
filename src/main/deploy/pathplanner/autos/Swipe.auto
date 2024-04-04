@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.8743027666164965,
+      "y": 4.285985079409469
+    },
+    "rotation": 120.579226872489
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "RampAndShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Swipe"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}

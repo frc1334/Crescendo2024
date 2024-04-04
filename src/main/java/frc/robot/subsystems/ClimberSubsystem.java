@@ -12,12 +12,15 @@ public class ClimberSubsystem extends SubsystemBase {
   Spark climberLeft;
   Spark climberRight;
 
+  public long upTime = 0;
+
   /** Creates a new ClimberSubsystem. */
   public ClimberSubsystem() {
     climberLeft = new Spark(ClimberConstants.CLIMBER_LEFT);
     climberRight = new Spark(ClimberConstants.CLIMBER_RIGHT);
   }
 
+  
   public void runClimberLeft(double speed) {
     climberLeft.set(speed);
   }

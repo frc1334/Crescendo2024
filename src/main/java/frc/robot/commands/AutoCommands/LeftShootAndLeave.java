@@ -21,14 +21,14 @@ public class LeftShootAndLeave extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new TimedSideShooter(0.9, 0.8, 2000), 
-      new SideSpeakerShoot(0.9, 0.8), 
+      new TimedSideShooter(1, 0.9, 2000), 
+      new SideSpeakerShoot(1, 0.9), 
       new TimedTeleopDrive(
         RobotContainer.swerveSubsystem, () -> -0.7, () -> 0, () -> 0, 
         () -> true, 2000),
       new TimedTeleopDrive(
         RobotContainer.swerveSubsystem, () -> -0.5, () -> 0.5, () -> 0, 
-        () -> true, 1000)
+        () -> true, 2000)
       );
   }
 }

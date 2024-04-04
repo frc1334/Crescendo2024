@@ -30,6 +30,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.AbsoluteDrive;
 import frc.robot.commands.DriveToTag;
+import frc.robot.commands.HoldClimb;
 import frc.robot.commands.TeleopDrive;
 import frc.robot.commands.TimedClimb;
 import frc.robot.commands.AutoCommands.DelayShoot;
@@ -102,10 +103,9 @@ public class RobotContainer {
     private static final String DELAY_SHOOT = "Delay Shoot";
     private static final String LEFT_DELAY_SHOOT = "LeftDelayShoot";
 
-    private static final String LEFT_AMP = "Left Amp";
-    private static final String RIGHT_AMP = "Right Amp";
-    private static final String FOUR_PIECE = "Four Piece";
-    private static final String TEST = "Test";
+    private static final String LEFT_TWO_PIECE = "Left Two";
+    private static final String RIGHT_TWO_PIECE = "Right Two";
+    private static final String SWIPE = "Swipe";
 
 
 
@@ -148,10 +148,9 @@ public class RobotContainer {
         autoChooser.addOption(DELAY_SHOOT, DELAY_SHOOT);
         autoChooser.addOption(LEFT_DELAY_SHOOT, LEFT_DELAY_SHOOT);
 
-        autoChooser.addOption(LEFT_AMP, LEFT_AMP);
-        autoChooser.addOption(RIGHT_AMP, RIGHT_AMP);
-        autoChooser.addOption(FOUR_PIECE, FOUR_PIECE);
-        autoChooser.addOption(TEST, TEST);
+        autoChooser.addOption(LEFT_TWO_PIECE, LEFT_TWO_PIECE);
+        autoChooser.addOption(RIGHT_TWO_PIECE, RIGHT_TWO_PIECE);
+        autoChooser.addOption(SWIPE, SWIPE);
 
 
         SmartDashboard.putData("AutoPattern", autoChooser);
@@ -178,16 +177,14 @@ public class RobotContainer {
 
         swerveSubsystem.setDefaultCommand(teleopDrive);
         
-        if (intakeSubsystem.sensorActivated()) {
-            new ColourCommand(LEDConstants.YELLOW);
-        }
+
     }
 
 
     private void configureBindings() {
 
         operatorA.whileTrue(new IntakeFinal());
-        operatorB.whileTrue(new ShooterCommand(0.9));
+        operatorB.whileTrue(new ShooterCommand(1));
         operatorB.onFalse(new SpeakerShoot());
         operatorLeftBumper.whileTrue(new AmpShootReady());
         operatorLeftBumper.onFalse(new AmpShootFinal());
@@ -261,17 +258,14 @@ public class RobotContainer {
         case LEFT_DELAY_SHOOT:
             return new LeftDelayShoot();
 
-        // case LEFT_AMP:
-        //     return new LeftAmpSide();
-        
-        // case RIGHT_AMP:
-        //     return new RightAmpSide();
+        case LEFT_TWO_PIECE:
+            return new PathPlannerAuto("LeftTwoNote");
 
-        // case FOUR_PIECE:
-        //     return new PathPlannerAuto("FourNote");
+        case RIGHT_TWO_PIECE:
+            return new PathPlannerAuto("RightTwoNote");
 
-        case TEST:
-            return new PathPlannerAuto("test");
+        case SWIPE:
+            return new PathPlannerAuto("Swipe");
             
         default:
             return new InstantCommand();

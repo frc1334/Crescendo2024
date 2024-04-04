@@ -14,6 +14,6 @@ public class RampAndShoot extends SequentialCommandGroup {
   public RampAndShoot() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new TimedShooter(0.9, 2000), new SpeakerShoot());
+    addCommands(new TimedShooter(1, 2000), new SpeakerShoot());
   }
 }
