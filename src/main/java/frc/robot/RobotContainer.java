@@ -36,6 +36,7 @@ import frc.robot.commands.TimedClimb;
 import frc.robot.commands.AutoCommands.DelayShoot;
 import frc.robot.commands.AutoCommands.LeftAmpSide;
 import frc.robot.commands.AutoCommands.LeftDelayShoot;
+import frc.robot.commands.AutoCommands.LeftRampAndShoot;
 import frc.robot.commands.AutoCommands.LeftShootAndLeave;
 import frc.robot.commands.AutoCommands.MiddleTwoPiece;
 import frc.robot.commands.AutoCommands.RightAmpSide;
@@ -102,6 +103,9 @@ public class RobotContainer {
     private static final String SHOOT_ONLY = "Shoot Only";
     private static final String DELAY_SHOOT = "Delay Shoot";
     private static final String LEFT_DELAY_SHOOT = "LeftDelayShoot";
+    private static final String LEFT_SHOOT_ONLY = "LeftShootOnly";
+    private static final String NEW_FOUR = "NewFour";
+
 
     private static final String LEFT_TWO_PIECE = "Left Two";
     private static final String RIGHT_TWO_PIECE = "Right Two";
@@ -137,6 +141,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("IntakeFinal", new IntakeFinal());
         NamedCommands.registerCommand("SpeakerShoot", new SpeakerShoot());
         NamedCommands.registerCommand("ShooterCommand", new ShooterCommand(0.8));
+        NamedCommands.registerCommand("MidTwo", new MiddleTwoPiece());
+
 
         // Put the auto patterns on the SmartDashboard
         autoChooser.setDefaultOption(DO_NOTHING, DO_NOTHING);
@@ -145,8 +151,13 @@ public class RobotContainer {
         autoChooser.addOption(RIGHT_SHOOT_LEAVE, RIGHT_SHOOT_LEAVE);
         autoChooser.addOption(LEAVE_ZONE, LEAVE_ZONE);
         autoChooser.addOption(SHOOT_ONLY, SHOOT_ONLY);
-        autoChooser.addOption(DELAY_SHOOT, DELAY_SHOOT);
-        autoChooser.addOption(LEFT_DELAY_SHOOT, LEFT_DELAY_SHOOT);
+        autoChooser.addOption(LEFT_SHOOT_ONLY, LEFT_SHOOT_ONLY);
+        autoChooser.addOption(NEW_FOUR, NEW_FOUR);
+
+
+
+        // autoChooser.addOption(DELAY_SHOOT, DELAY_SHOOT);
+        // autoChooser.addOption(LEFT_DELAY_SHOOT, LEFT_DELAY_SHOOT);
 
         autoChooser.addOption(LEFT_TWO_PIECE, LEFT_TWO_PIECE);
         autoChooser.addOption(RIGHT_TWO_PIECE, RIGHT_TWO_PIECE);
@@ -170,9 +181,9 @@ public class RobotContainer {
 
         TeleopDrive teleopDrive = new TeleopDrive(
             swerveSubsystem,
-            () -> MathUtil.applyDeadband(driverController.getLeftY() * 0.77, OperatorConstants.LEFT_Y_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getLeftX() * 0.77, OperatorConstants.LEFT_X_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getRightX() * 0.9, OperatorConstants.RIGHT_X_DEADBAND), 
+            () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+            () -> MathUtil.applyDeadband(driverController.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), 
             () -> true);
 
         swerveSubsystem.setDefaultCommand(teleopDrive);
@@ -189,20 +200,20 @@ public class RobotContainer {
         operatorLeftBumper.whileTrue(new AmpShootReady());
         operatorLeftBumper.onFalse(new AmpShootFinal());
         operatorRightBumper.onTrue(new FlopperZero());
-        operatorX.onTrue(new TimedClimb(0.8, 0.8, 2700));
-        operatorY.onTrue(new TimedClimb(-0.8, -0.8, 2700));
+        operatorX.onTrue(new TimedClimb(0.8, 0.8, 3500));
+        operatorY.onTrue(new TimedClimb(-0.8, -0.8, 3500));
 
-
+;
         driverX.onTrue(Commands.runOnce(swerveSubsystem::zeroGyro));
 
         operatorLeftStick.onTrue(new PartyTime());
 
-        driverRightBumper.whileTrue(new TeleopDrive(
-            swerveSubsystem,
-            () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
-            () -> MathUtil.applyDeadband(driverController.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), 
-            () -> true));
+        // driverRightBumper.whileTrue(new TeleopDrive(
+        //     swerveSubsystem,
+        //     () -> MathUtil.applyDeadband(driverController.getLeftY(), OperatorConstants.LEFT_Y_DEADBAND),
+        //     () -> MathUtil.applyDeadband(driverController.getLeftX(), OperatorConstants.LEFT_X_DEADBAND),
+        //     () -> MathUtil.applyDeadband(driverController.getRightX(), OperatorConstants.RIGHT_X_DEADBAND), 
+        //     () -> true));
 
         driverLeftBumper.whileTrue(new TeleopDrive(
             swerveSubsystem,
@@ -252,11 +263,17 @@ public class RobotContainer {
         case SHOOT_ONLY:
             return new RampAndShoot();
 
-        case DELAY_SHOOT:
-            return new DelayShoot();
+        case LEFT_SHOOT_ONLY:
+            return new LeftRampAndShoot();
 
-        case LEFT_DELAY_SHOOT:
-            return new LeftDelayShoot();
+        case NEW_FOUR:
+            return new PathPlannerAuto("NewFourPiece");
+
+        // case DELAY_SHOOT:
+        //     return new DelayShoot();
+
+        // case LEFT_DELAY_SHOOT:
+        //     return new LeftDelayShoot();
 
         case LEFT_TWO_PIECE:
             return new PathPlannerAuto("LeftTwoNote");
